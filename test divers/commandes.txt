@@ -1,0 +1,18 @@
+                                                                        DeLorean
+
+
+
+SET_AREA x y //définit la taille du canvas
+SET_LIMITS x0 x1 y0 y1 // définit des "marges", les valeurs seront en pixels depuis le bord
+SET_ORIGIN x y //place  l'origine du repère dans le plan
+SET_RELATIVE_COORD //pour travailler en coordonnées relatives
+SET_ABSOLUTE_COORD //pour travailler en coordonnées absolues
+SET_POLAR //pour travailler en coordonnées polaires
+SET_CARTESIAN // pour travailler en coordonnées cartesiennes
+TELEPORT x y / R θ //pour téléporter le traceur sans faire de dessin
+MOVE x y / R θ //pour déplacer le traceur et dessiner le déplacement
+SET_COLOR r g b //définit la couleur de dessin
+SET_OPACITY a //définit l'opacité du dessin
+SET_THICKNESS t //définit l'epaisseur de dessin
+SET_STYLE dot/plain/semi-plain //définit le type de ligne
+SET_LINE_END sharp/round/arrow //définit l'allur des extrémités de la ligne
