@@ -2,7 +2,7 @@
 
 
 Si [instruction] {paramètre(s)} [caractère de fin de ligne ";" ?]
-Alors cela implique de definir des variables auparant (position, direction, angle, etc.)
+Alors cela implique de definir des variables auparavant (position, direction, angle, etc.)
 
 SET_AREA x y //définit la taille du canvas
 SET_LIMITS x0 x1 y0 y1 // définit des "marges", les valeurs seront en pixels depuis le bord
