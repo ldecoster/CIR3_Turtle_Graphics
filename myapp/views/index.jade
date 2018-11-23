@@ -1,0 +1,41 @@
+doctype html
+html(lang="fr")
+	head
+		title= title
+		link(rel='stylesheet', href='/stylesheets/bootstrap.min.css')
+		link(rel='stylesheet', href='/stylesheets/style.css')
+		meta(charset="utf8")
+	body
+		block content
+
+		nav.navbar.navbar-expand-lg.navbar-light.bg-light
+			button(class="navbar-toggler", type="button", data-toggle="collapse", data-target="#navbarText", aria-controls="navbarText", aria-expanded="false", aria-label="Toggle navigation")
+				span(class="navbar-toggler-icon")
+			#navbarText.collapse.navbar-collapse
+				ul.navbar-nav.mr-auto
+					li.nav-item.active
+						a.nav-link(href='#') Interpréteur 
+							span.sr-only (current)
+					li.nav-item
+						a.nav-link(href='#') Documentation
+					li.nav-item
+						a.nav-link(href='#') Exemples
+				span.navbar-text Deloreannn.
+
+		.container-fluid
+			.row
+				.col.col-lg-3
+					h1.mt-4 Editeur de code
+					#code-editor.text-center
+						pre#editor
+						input(type="submit", id="validate_code", value="Lancer", class="btn mt-2")
+					p#disp
+				.col.col-lg-1
+				.col.col-lg-8#draw_area
+					h1.mt-4 Deloreannn draw
+
+		script(type='text/javascript' src='/javascripts/jquery-3.3.1.min.js')
+		script(type='text/javascript' src='/javascripts/bootstrap.min.js')
+		script(src="javascripts/ace.js", type="text/javascript", charset="utf-8")
+		script(type='text/javascript' src='/javascripts/main.js')
+		
