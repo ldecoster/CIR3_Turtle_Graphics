@@ -1,17 +1,23 @@
 (function(){
-    
+
+    //definitions des  propriétés de la Delorean
+    var curent_position = [0,0];
+    var current_angle = 0;
+    var current_color = "#000000";
+    var current_thickness = 1;
+    var current_line_end = 'round';
+
+
     //definitions des propriétés de la zone de travail
-    var size = [1900,500];
-    var limits = [0,0,0,0];
-
-    //definitions des propriétés de la Delorean
-
-    var current_pos = [0,0];
+    var size = [500,500];
+    //var limits = [0,0,0,0];
     var origin_offset = [0,0];
-    var color = [0,0,0,0]; //rgba
+
+    //ne sera pas modifiable par l'user
+    var angle_offset = Math.PI/2;
 
     //def contexte
-    var draw = SVG('drawing').size(size[0], size[1]);
+    var draw_zone = SVG('drawing').size(size[0], size[1]);
 
     //def fonctions
     var putline = function(context,x0, y0, x1, y1, properties){
@@ -20,40 +26,45 @@
         console.log('a line has been drawn');
     }
 
-    //tests 
-    var nb_line = 3000;
-    var rand_coord = Array(nb_line);
-
-
-    for(let i = 0; i<nb_line; i++){
-        rand_coord[i] = [Math.floor(Math.random()*size[0]),Math.floor(Math.random()*size[1])];
-    }
-    for(let i = 0; i<nb_line-1; i++){
-        putline(draw,rand_coord[i][0],rand_coord[i][1],rand_coord[i+1][0],rand_coord[i+1][1],{ color: '#000', width: 1, linecap: 'round' });
+    var convert_polar = function(distance,angle){
+        current_angle = current_angle + angle;
+        var x_composante =  curent_position[0] + Math.round(distance*Math.cos((Math.PI/180)*(current_angle + angle_offset*0)));
+        var y_composante =  curent_position[1] + Math.round(distance*Math.sin((Math.PI/180)*(current_angle + angle_offset*0)));
+        if(x_composante>size[0]){x_composante=size[0]};
+        if(y_composante>size[1]){x_composante=size[1]};
+        return([x_composante,y_composante]);
     }
 
-    //console.log(Math.floor(Math.random()*size[1]));
+    var draw = function(x1,y1, color = current_color, line_end = current_line_end, thickness = current_thickness){
+        
+        current_color = color;
+        current_line_end = line_end;
+        current_thickness = thickness;
 
+        putline(draw_zone,
+                origin_offset[0] + curent_position[0],
+                origin_offset[1] + curent_position[1],
+                origin_offset[0] + x1, 
+                origin_offset[1] + y1,
+                { color: current_color, width: current_thickness, linecap: current_line_end });
+        curent_position = [x1,y1];
+    }
 
-  
-
-
-
-   
-
+    var teleport = function(x,y){curent_position = [x,y];}
+    
+  //Là où il faudra interpréter les commandes
+    origin_offset = [260,0];
 
     
-
-   
-   /* var rect = draw.rect(150, 100).attr({ fill: '#f12' });
-
-    var line = draw.line(50,10, 50, 50);
-    line.stroke({ color: '#000', width: 10, linecap: 'round' });
+    for(let side = 2; side<40; side++){
+        for(let i = 0; i < side; i++){
+            coord = convert_polar(40,(360/side));
+            draw(coord[0],coord[1],undefined,undefined,undefined);
+            
+        }
+    }
     
-    var line = draw.line(32,25, 75, 25);*/
-
-
-
+    
 
 
 
