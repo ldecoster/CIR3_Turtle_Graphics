@@ -12,8 +12,22 @@
     var update_display = function()
     {
         var rect = draw_zone.rect(1920, 1080).fill('#ffffff');
-        draw_zone.image('img/0.png');
-        div_info.innerHTML = JSON.stringify(polygon_collection);
+        draw_zone.image('img/1.png');
+
+        var string_code = '';
+
+        for(let i = 0; i < polygon_collection.length; i++){
+            for(let j = 0; j < polygon_collection[i].length; j++){
+                if(j==0){
+                    string_code = string_code + 'TELEPORTER '+ polygon_collection[i][j][0] + ',' + polygon_collection[i][j][1] + '; <br>';
+                }else{
+                    string_code = string_code + 'AVANCER '+ polygon_collection[i][j][0] + ',' + polygon_collection[i][j][1] + '; <br>';
+                }
+            }
+
+        }
+
+        div_info.innerHTML = string_code;
 
 
         if(clicked_point.length>=2){
@@ -58,7 +72,7 @@
             if(clicked_point.length>1){
                 clicked_point.pop();
             }else{
-                console.log("nombre max d'actions retour atteint");
+               polygon_collection.pop();
             }
             
             update_display();
