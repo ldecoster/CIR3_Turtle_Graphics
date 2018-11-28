@@ -29,7 +29,9 @@ html(lang="fr")
 						h1.mt-4 Editeur de code
 						#code-editor.text-center
 							pre#editor
-							input(type="submit", id="validate_code", value="Lancer", class="btn mt-2")
+							div(class="row justify-content-around")
+								input(type="submit", id="validate_code", value="Lancer", class="btn mt-2")
+								input(type="reset", id="clear_code", value="Nettoyer", class="btn mt-2")
 						p#disp
 				.col.col-lg-1
 				.col.col-lg-8#draw_area

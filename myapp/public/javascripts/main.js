@@ -5,10 +5,10 @@
     editor.setTheme("ace/theme/twilight");
     //editor.session.setMode("ace/mode/javascript");
     
-    launch_btn = document.getElementById("validate_code");
     disp = document.getElementById("disp");
 
-    launch_btn.addEventListener("click", function(event){
+    launch_btn = document.getElementById("validate_code");
+    launch_btn.addEventListener("click", function(event) {
         event.preventDefault();
         code = editor.getValue();
 
@@ -34,6 +34,11 @@
         });
     });
 
+    clear_btn = document.getElementById("clear_code");
+    clear_btn.addEventListener("click", function(event) {
+        event.preventDefault();
+        editor.setValue("");
+    });
 
     var updateDisplay = function(command_array){
 
