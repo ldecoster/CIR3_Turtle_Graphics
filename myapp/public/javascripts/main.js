@@ -1,14 +1,10 @@
 (function(){
-    //console.log("coucou le monde");
-    ace.require("ace/ext/language_tools");
-
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
-    editor.session.setMode("ace/mode/javascript");
+    //editor.session.setMode("ace/mode/javascript");
     
     launch_btn = document.getElementById("validate_code");
     disp = document.getElementById("disp");
-    //editor = document.getElementById("editor");
 
     launch_btn.addEventListener("click", function(event){
         event.preventDefault();
