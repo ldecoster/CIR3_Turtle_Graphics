@@ -9,22 +9,25 @@ router.get('/', function(req, res, next) {
 
 router.post('/', function(req, res, next) {
 	console.log('Get data : ' + JSON.stringify(req.body));
-	test(req.body.data);
-	res.send(req.body);
- 	//var p1 = req.body.p1; 
- 	//console.log("p1=" + p1);
- 	//res.render('index', { title: 'Turtle Graphic' });
+	var command_array = getJison(req.body.data);
+	console.log(typeof(command_array));
+	res.send(command_array);
 });
 
-var test = function(stringInput) {
+var getJison = function(stringInput) {
 	var fs = require("fs");
 	var jison = require("jison");
 
 	var bnf = fs.readFileSync("test.jison", "utf8");
 	var parser = new jison.Parser(bnf);
 
-	t = parser.parse(stringInput);
-	console.log(t);
+	var command_array = parser.parse(stringInput);
+
+	console.log(command_array);
+	return command_array;
+
+
+
 };
 
 

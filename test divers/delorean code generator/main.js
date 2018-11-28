@@ -2,6 +2,9 @@
     var div_info = document.getElementById("info");
     var div_canvas  = document.getElementById("canvas");
 
+    var cursor_pos = [0,0];
+    var precision = 10;
+
     var clicked_point = new Array();
 
     var polygon_collection = new Array();
@@ -11,8 +14,10 @@
 
     var update_display = function()
     {
-        var rect = draw_zone.rect(1920, 1080).fill('#ffffff');
+        draw_zone.rect(1920, 1080).fill('#FFFFFF');
         draw_zone.image('img/1.png');
+        draw_zone.circle(precision).fill('#00FF00').move(cursor_pos[0],cursor_pos[1])
+        
 
         var string_code = '';
 
@@ -83,6 +88,44 @@
             clicked_point = new Array();
             update_display();
         }
+
+        if(keyName=='o'){
+            cursor_pos[1]--;
+            update_display();
+        }
+
+        if(keyName=='l'){
+            cursor_pos[1]++;
+            update_display();
+        }
+        
+        if(keyName=='k'){
+            cursor_pos[0]--;
+            update_display();
+        }
+
+        if(keyName=='m'){
+            cursor_pos[0]++;
+            update_display();
+        }
+
+        if(keyName=='a'){
+            clicked_point.push([cursor_pos[0],cursor_pos[1]]);
+            update_display();
+        }
+
+        if(keyName=='i'){
+            precision--;
+            update_display();
+        }
+
+        if(keyName=='p'){
+            precision++;
+            update_display();
+        }
+
+
+
       });
 
 
