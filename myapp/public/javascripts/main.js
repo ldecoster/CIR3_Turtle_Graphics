@@ -24,7 +24,7 @@
             dataType : 'json',
             success : function(data) {
                 console.log('Data renvoyée par le serveur :'); 
-                //console.log(data);
+                console.log(data);
                 updateDisplay(data);
             },
             error : function(e) {
@@ -35,44 +35,44 @@
     });
 
 
-var updateDisplay = function(command_array){
+    var updateDisplay = function(command_array){
 
-    var temp_point = new Array();
-    var polygon_collection = new Array();
+        var temp_point = new Array();
+        var polygon_collection = new Array();
 
-    //création de la collection de polygones qui seront ensuite affichés
-	for(let i = 0; i < Object.keys(command_array).length; i++){
-		if(command_array[i].cmd == 'TELEPORT'){
-            
-                if(temp_point.length != 0){
+        // Création de la collection de polygones qui seront ensuite affichés
+        for(let command of command_array){
+            if(command.cmd === 'TELEPORT'){
+
+                if(temp_point.length !== 0){
                     polygon_collection.push(temp_point);
                 }
-				
-				temp_point = new Array();
-				temp_point.push(command_array[i].val);			
-		}
-		if(command_array[i].cmd == 'MOVE'){
-            temp_point.push(command_array[i].val);
-        }
 
-        console.log(polygon_collection.length);
-    }
-    //affichage du graphe
-    for(let i = 0; i<polygon_collection.length;i++){
-        if(polygon_collection[i].length>=2){
-            for(let j = 0;j+1<polygon_collection[i].length;j++){
-                var s = polygon_collection[i][j];
-                var e = polygon_collection[i][j+1];
-                var line = draw_zone.line(s[0],s[1],e[0],e[1]).stroke({ width: 1, color:'#FF5500' });
+                temp_point = new Array();
+                temp_point.push(command.val);			
+            }
+            if(command.cmd === 'MOVE'){
+                temp_point.push(command.val);
+            }
+
+            //console.log(polygon_collection.length);
+        }
+        
+        // Affichage du graphe
+        for(let polygon of polygon_collection){
+            if(polygon.length >= 2){
+                for(let j = 0; j+1<polygon.length; j++){
+                    var s = polygon[j];
+                    var e = polygon[j+1];
+                    var line = draw_zone.line(s[0],s[1],e[0],e[1]).stroke({ width: 1, color:'#FF5500' });
+                }
             }
         }
-    }
 
-    //console.log("collection de polygones :");
-    //console.log(polygon_collection);
+        console.log("collection de polygones :");
+        console.log(polygon_collection);
+    };
 
-}
-	
 
 
 })();
