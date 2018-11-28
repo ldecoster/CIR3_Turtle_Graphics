@@ -54,9 +54,11 @@
             if(command.cmd === 'MOVE'){
                 temp_point.push(command.val);
             }
-
-            //console.log(polygon_collection.length);
         }
+        
+         //ajout du dernier polygone à la collection
+         polygon_collection.push(temp_point);
+         temp_point = new Array();
         
         // Affichage du graphe
         for(let polygon of polygon_collection){
