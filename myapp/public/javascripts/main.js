@@ -70,20 +70,28 @@
          temp_point = new Array();
         
         // Affichage du graphe
-        for(let polygon of polygon_collection){
-            if(polygon.length >= 2){
-                for(let j = 0; j+1<polygon.length; j++){
-                    var s = polygon[j];
-                    var e = polygon[j+1];
-                    var line = draw_zone.line(s[0],s[1],e[0],e[1]).stroke({ width: 1, color:'#FF5500' });
+
+        var putline = function(context,x0, y0, x1, y1, properties,delay_){
+            context.line(x0,y0,x1,y1).stroke(properties).animate({duration : 100, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
+            console.log(delay_);
+        }
+
+        nb_line = 0;
+
+        for(let i=0; i < polygon_collection.length; i++) {
+            if(polygon_collection[i].length >= 2){
+                for(let j = 0; j+1<polygon_collection[i].length; j++){
+                    nb_line++;
+                    //console.log(nb_line)
+                    var s = polygon_collection[i][j];
+                    var e = polygon_collection[i][j+1];
+                    console.log(s);
+                    putline(draw_zone,s[0],s[1],e[0],e[1],{ width: 1, color:'#FF5500' },nb_line*110);
                 }
             }
         }
-
-        console.log("collection de polygones :");
-        console.log(polygon_collection);
     };
 
 
-
 })();
+
