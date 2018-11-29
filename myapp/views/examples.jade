@@ -13,30 +13,15 @@ html(lang="fr")
 				span(class="navbar-toggler-icon")
 			#navbarText.collapse.navbar-collapse
 				ul.navbar-nav.mr-auto
-					li.nav-item.active
+					li.nav-item
 						a.nav-link(href='#') Interpréteur 
 					li.nav-item
 						a.nav-link(href='/documentation') Documentation
-					li.nav-item
+					li.nav-item.active
 						a.nav-link(href='/exemples') Exemples
 				span.navbar-text Deloreannn.
 
-		.container-fluid
-			.row
-				.col.col-lg-3
-					form(method="post")
-						h2.mt-2 Editeur de code
-						#code-editor.text-center
-							pre#editor
-							#error_message.error_message.mb-2.text-left
-								> 
-							div(class="row justify-content-around")
-								input(type="submit", id="validate_code", value="Lancer")
-								input(type="reset", id="clear_code", value="Nettoyer")
-				.col.col-lg-9
-					h2.mt-2 Deloreannn draw
-					#draw_area
-
+		
 		script(type='text/javascript' src='/javascripts/jquery-3.3.1.min.js')
 		script(type='text/javascript' src='/javascripts/bootstrap.min.js')
 		script(type='text/javascript' src='/javascripts/svg.js')
