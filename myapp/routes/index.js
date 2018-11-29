@@ -10,7 +10,6 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res, next) {
 	console.log('Get data : ' + JSON.stringify(req.body));
 	var command_array = getJison(req.body.data);
-	console.log(typeof(command_array));
 	res.send(command_array);
 });
 
@@ -25,9 +24,6 @@ var getJison = function(stringInput) {
 
 	console.log(command_array);
 	return command_array;
-
-
-
 };
 
 

@@ -9,3 +9,7 @@
     border-width: 1px;
     border-color: black;
 }
+.error_message {
+	background-color: black;
+	color: white;
+}

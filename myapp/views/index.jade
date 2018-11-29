@@ -26,20 +26,22 @@ html(lang="fr")
 			.row
 				.col.col-lg-3
 					form(method="post")
-						h1.mt-4 Editeur de code
+						h2.mt-2 Editeur de code
 						#code-editor.text-center
 							pre#editor
+							#error_message.error_message.mt-1.text-left
+								> 
 							div(class="row justify-content-around")
-								input(type="submit", id="validate_code", value="Lancer", class="btn mt-2")
-								input(type="reset", id="clear_code", value="Nettoyer", class="btn mt-2")
-						p#disp
-				.col.col-lg-8#draw_area
-					h1.mt-4 Deloreannn draw
+								input(type="submit", id="validate_code", value="Lancer", class="btn mt-1")
+								input(type="reset", id="clear_code", value="Nettoyer", class="btn mt-1")
+				.col.col-lg-8
+					h2.mt-2 Deloreannn draw
+					#draw_area
 
 		script(type='text/javascript' src='/javascripts/jquery-3.3.1.min.js')
 		script(type='text/javascript' src='/javascripts/bootstrap.min.js')
 		script(type='text/javascript' src='/javascripts/svg.js')
-		script(src="javascripts/ace.js", type="text/javascript", charset="utf-8")
+		script(type='text/javascript' src='/javascripts/ace.js')
 		script(type='text/javascript' src='/javascripts/main.js')
 		
 		

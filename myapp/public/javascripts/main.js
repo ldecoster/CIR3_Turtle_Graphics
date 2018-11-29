@@ -1,17 +1,16 @@
 (function(){
-    var draw_zone = SVG('draw_area').size(1920, 1080);
+    var draw_zone = SVG('draw_area').size(800, 600);
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
     
-    disp = document.getElementById("disp");
+    var errorDiv = $('#error_message');
 
     launch_btn = document.getElementById("validate_code");
     launch_btn.addEventListener("click", function(event) {
         event.preventDefault();
         code = editor.getValue();
-
-        disp.innerHTML = code;
+        errorDiv.text("> ");
         //console.log(code);
 
         var data = {'data' : code};
@@ -27,8 +26,12 @@
                 updateDisplay(data);
             },
             error : function(e) {
-                alert("Error!")
-                console.log("ERROR: ", e);
+                alert("Erreur de commande !");
+                htmlError = e.responseText;
+                var d = $('<div>').html(htmlError);
+                var h1 = d.children()[2];
+                var errorMessage = h1.innerHTML.split("^")[1];
+                errorDiv.append(errorMessage);
             }
         });
     });
@@ -37,6 +40,7 @@
     clear_btn.addEventListener("click", function(event) {
         event.preventDefault();
         editor.setValue("");
+        errorDiv.text("> ");
         draw_zone.clear();
     });
 
