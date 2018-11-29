@@ -3,7 +3,6 @@
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
-    //editor.session.setMode("ace/mode/javascript");
     
     disp = document.getElementById("disp");
 
@@ -38,6 +37,7 @@
     clear_btn.addEventListener("click", function(event) {
         event.preventDefault();
         editor.setValue("");
+        draw_zone.clear();
     });
 
     var updateDisplay = function(command_array){
