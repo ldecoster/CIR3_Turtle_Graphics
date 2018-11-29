@@ -29,8 +29,9 @@
                 alert("Erreur de commande !");
                 htmlError = e.responseText;
                 var d = $('<div>').html(htmlError);
-                var h1 = d.children()[2];
-                var errorMessage = h1.innerHTML.split("^")[1];
+                var h1Content = d.children()[2].innerHTML.split("^");
+                var lineError = h1Content[0].split(":")[0].replace( /[^\d\.]*/g, '');
+                var errorMessage = '('+lineError+') '+h1Content[1];
                 errorDiv.append(errorMessage);
             }
         });
@@ -68,7 +69,7 @@
          //ajout du dernier polygone à la collection
          polygon_collection.push(temp_point);
          temp_point = new Array();
-        
+
         // Affichage du graphe
 
         var putline = function(context,x0, y0, x1, y1, properties,delay_){
