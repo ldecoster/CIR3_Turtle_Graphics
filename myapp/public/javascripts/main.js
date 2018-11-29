@@ -1,5 +1,5 @@
 (function(){
-    var draw_zone = SVG('draw_area').size(800, 600);
+    var draw_zone = SVG('draw_area').size(1050, 600);
 
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
