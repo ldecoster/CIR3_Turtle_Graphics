@@ -6,11 +6,11 @@
     
     var errorDiv = $('#error_message');
 
-    launch_btn = document.getElementById("validate_code");
-    launch_btn.addEventListener("click", function(event) {
+    launchBtn = document.getElementById("validate_code");
+    launchBtn.addEventListener("click", function(event) {
         event.preventDefault();
         code = editor.getValue();
-        errorDiv.text("> ");
+        errorDiv.text(">_ ");
         //console.log(code);
 
         var data = {'data' : code};
@@ -37,11 +37,17 @@
         });
     });
 
-    clear_btn = document.getElementById("clear_code");
-    clear_btn.addEventListener("click", function(event) {
+    clearDrawBtn = document.getElementById("clear_draw");
+    clearDrawBtn.addEventListener("click", function(event) {
+        event.preventDefault();
+        draw_zone.clear();
+    });
+
+    clearAllBtn = document.getElementById("clear_all");
+    clearAllBtn.addEventListener("click", function(event) {
         event.preventDefault();
         editor.setValue("");
-        errorDiv.text("> ");
+        errorDiv.text(">_ ");
         draw_zone.clear();
     });
 

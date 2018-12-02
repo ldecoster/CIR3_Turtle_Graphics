@@ -25,16 +25,17 @@ html(lang="fr")
 			.row
 				.col.col-lg-3
 					form(method="post")
-						h2.mt-2 Editeur de code
+						h2 Editeur de code
 						#code-editor.text-center
 							pre#editor
 							#error_message.error_message.mb-2.text-left
-								> 
+								>_ 
 							div(class="row justify-content-around")
 								input(type="submit", id="validate_code", value="Lancer")
-								input(type="reset", id="clear_code", value="Nettoyer")
+								input(type="reset", id="clear_draw", value="Nettoyer dessin")
+								input(type="reset", id="clear_all", value="Tout nettoyer")
 				.col.col-lg-9
-					h2.mt-2 Deloreannn draw
+					h2 Deloreannn draw
 					#draw_area
 
 		script(type='text/javascript' src='/javascripts/jquery-3.3.1.min.js')
