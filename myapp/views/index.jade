@@ -35,7 +35,13 @@ html(lang="fr")
 								input(type="reset", id="clear_draw", value="Nettoyer dessin")
 								input(type="reset", id="clear_all", value="Tout nettoyer")
 				.col.col-lg-9
-					h2 Deloreannn draw
+					.row
+						.col.col-lg-3
+							h2 Deloreannn draw
+						.col.col-lg-9.d-flex.align-items-center
+							div.d-flex.align-items-center
+								label(for="speed", class="mb-0, mr-1") Vitesse
+								input(type="range" id="drawSpeed" name="speed" min="0" max="88")
 					#draw_area
 
 		script(type='text/javascript' src='/javascripts/jquery-3.3.1.min.js')
