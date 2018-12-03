@@ -33,6 +33,11 @@
                 var lineError = h1Content[0].split(":")[0].replace( /[^\d\.]*/g, '');
                 var errorMessage = '('+lineError+') '+h1Content[1];
                 errorDiv.append(errorMessage);
+
+                // Rajoute une croix rouge devant la 1ère ligne erronée
+                var editorDiv = document.getElementById("editor");
+                editorDiv.children[1].firstChild.children[lineError-1].classList.add("ace_error");
+
             }
         });
     });
@@ -49,6 +54,11 @@
         editor.setValue("");
         errorDiv.text(">_ ");
         draw_zone.clear();
+    });
+
+    speedBtn = document.getElementById("drawSpeed");
+    speedBtn.addEventListener("click", function(event) {
+        console.log(event.target.value);
     });
 
     var updateDisplay = function(command_array){
