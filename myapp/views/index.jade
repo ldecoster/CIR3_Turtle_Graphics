@@ -31,17 +31,18 @@ html(lang="fr")
 							#error_message.error_message.mb-2.text-left
 								>_ 
 							div(class="row justify-content-around")
-								input(type="submit", id="validate_code", value="Lancer")
-								input(type="reset", id="clear_draw", value="Nettoyer dessin")
-								input(type="reset", id="clear_all", value="Tout nettoyer")
+								input(type="submit", id="validate_code", value="Lancer" class="btn")
+								input(type="reset", id="clear_draw", value="Nettoyer dessin" class="btn")
+								input(type="reset", id="clear_all", value="Tout nettoyer" class="btn")
 				.col.col-lg-9
 					.row
-						.col.col-lg-3
+						.col.col-lg-4
 							h2 Deloreannn draw
-						.col.col-lg-9.d-flex.align-items-center
+						.col.col-lg-8.d-flex.align-items-center
 							div.d-flex.align-items-center
-								label(for="speed", class="mb-0, mr-1") Vitesse
-								input(type="range" id="drawSpeed" name="speed" min="0" max="88")
+								label(for="speed", class="mb-0 mr-1") Vitesse
+								input(type="range" id="drawSpeed" name="speed" min="0" max="88" class="btn")
+								p.mb-0 88 mph
 					#draw_area
 
 		script(type='text/javascript' src='/javascripts/jquery-3.3.1.min.js')

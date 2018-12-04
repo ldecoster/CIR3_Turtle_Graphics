@@ -57,7 +57,7 @@
     });
 
     speedBtn = document.getElementById("drawSpeed");
-    speedBtn.addEventListener("click", function(event) {
+    speedBtn.addEventListener("input", function(event) {
         console.log(event.target.value);
     });
 
