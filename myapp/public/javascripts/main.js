@@ -1,6 +1,6 @@
 (function(){
     var draw_zone = SVG('draw_area').size(1050, 600);
-
+    var speed = 0;
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
     
@@ -58,7 +58,7 @@
 
     speedBtn = document.getElementById("drawSpeed");
     speedBtn.addEventListener("input", function(event) {
-        console.log(event.target.value);
+        speed = event.target.value;
     });
 
     var updateDisplay = function(command_array){
@@ -88,8 +88,8 @@
 
         // Affichage du graphe
 
-        var putline = function(context,x0, y0, x1, y1, properties,delay_){
-            context.line(x0,y0,x1,y1).stroke(properties).animate({duration : 100, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
+        var putline = function(context,x0, y0, x1, y1, properties,speed, delay_){
+            context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
             console.log(delay_);
         }
 
@@ -103,7 +103,7 @@
                     var s = polygon_collection[i][j];
                     var e = polygon_collection[i][j+1];
                     console.log(s);
-                    putline(draw_zone,s[0],s[1],e[0],e[1],{ width: 1, color:'#FF5500' },nb_line*110);
+                    putline(draw_zone,s[0],s[1],e[0],e[1],{ width: 1, color:'#FF5500' },speed*10,nb_line*speed*10);
                 }
             }
         }
