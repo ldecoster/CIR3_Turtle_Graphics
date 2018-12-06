@@ -1,6 +1,21 @@
 (function(){
     var draw_zone = SVG('draw_area').size(1050, 600);
+    var curent_position = [0,0];
+    var current_angle = 0;
+    var current_color = "#000000";
+    var current_thickness = 1;
+    var current_line_end = 'round';
+
+    //definitions des propriétés de la zone de travail
+    var size = [500,500];
+    //var limits = [0,0,0,0];
+    var origin_offset = [0,0];
+
     var speed = 0;
+    var nb_line = 0;
+
+
+
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
     
@@ -11,7 +26,6 @@
         event.preventDefault();
         code = editor.getValue();
         errorDiv.text(">_ ");
-        //console.log(code);
 
         var data = {'data' : code};
         $.ajax({
@@ -21,8 +35,8 @@
             data : JSON.stringify(data),
             dataType : 'json',
             success : function(data) {
-                console.log('Data renvoyée par le serveur :'); 
-                console.log(data);
+                //console.log('Data renvoyée par le serveur :'); 
+                //console.log(data);
                 updateDisplay(data);
             },
             error : function(e) {
@@ -61,50 +75,57 @@
         speed = event.target.value;
     });
 
+    var convert_polar = function(distance,angle){
+        current_angle = current_angle + angle;
+        var x_composante =  curent_position[0] + Math.round(distance*Math.cos((Math.PI/180)*(current_angle + angle_offset*0)));
+        var y_composante =  curent_position[1] + Math.round(distance*Math.sin((Math.PI/180)*(current_angle + angle_offset*0)));
+        if(x_composante>size[0]){x_composante=size[0]};
+        if(y_composante>size[1]){x_composante=size[1]};
+        return([x_composante,y_composante]);
+    }
+
+    var draw = function(x1,y1,speed){
+        properties = { color: current_color, width: current_thickness, linecap: current_line_end };
+        var delay = nb_line*speed;
+
+        putline(draw_zone,
+                origin_offset[0] + curent_position[0],
+                origin_offset[1] + curent_position[1],
+                origin_offset[0] + x1, 
+                origin_offset[1] + y1,
+                properties,
+                speed,
+                delay
+                );
+    }
+
+    var teleport = function(x,y){curent_position = [x,y];}
+
+    // Affichage du graphe
+
+    var putline = function(context,x0, y0, x1, y1, properties,speed, delay_){
+        context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
+    }
+
     var updateDisplay = function(command_array){
-
-        var temp_point = new Array();
-        var polygon_collection = new Array();
-
-        // Création de la collection de polygones qui seront ensuite affichés
+        nb_line = 0;
+        current_color = "#000000";
         for(let command of command_array){
             if(command.cmd === 'TELEPORT'){
-
-                if(temp_point.length !== 0){
-                    polygon_collection.push(temp_point);
-                }
-
-                temp_point = new Array();
-                temp_point.push(command.val);			
+                teleport(command.val[0],command.val[1]);		
             }
             if(command.cmd === 'MOVE'){
-                temp_point.push(command.val);
+                s = curent_position;
+                e = command.val;
+                nb_line++;
+                draw(e[0],e[1],speed);
+                teleport(command.val[0],command.val[1]);
             }
-        }
-        
-         //ajout du dernier polygone à la collection
-         polygon_collection.push(temp_point);
-         temp_point = new Array();
 
-        // Affichage du graphe
+            if(command.cmd === 'COLOR'){current_color = command.val;}
 
-        var putline = function(context,x0, y0, x1, y1, properties,speed, delay_){
-            context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
-            console.log(delay_);
-        }
+            if(command.cmd === 'TURN'){
 
-        nb_line = 0;
-
-        for(let i=0; i < polygon_collection.length; i++) {
-            if(polygon_collection[i].length >= 2){
-                for(let j = 0; j+1<polygon_collection[i].length; j++){
-                    nb_line++;
-                    //console.log(nb_line)
-                    var s = polygon_collection[i][j];
-                    var e = polygon_collection[i][j+1];
-                    console.log(s);
-                    putline(draw_zone,s[0],s[1],e[0],e[1],{ width: 1, color:'#FF5500' },speed*10,nb_line*speed*10);
-                }
             }
         }
     };
