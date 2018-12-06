@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="fr">
+<head>
+	<title>Turtle Examples</title>
+	<link rel="stylesheet" href="/stylesheets/bootstrap.min.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	<meta charset="utf8">
+</head>
+
+<body>
+	<nav class="navbar navbar-expand-lg navbar-light">
+		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+		<div id="navbarText" class="collapse navbar-collapse">
+			<ul class="navbar-nav mr-auto">
+				<li class="nav-item active"><a class="nav-link" href="/">Interpréteur</a></li>
+				<li class="nav-item"><a class="nav-link" href="/documentation">Documentation</a></li>
+				<li class="nav-item"><a class="nav-link" href="/exemples">Exemples</a></li>
+			</ul>
+			<span class="navbar-text">Deloreannn.</span>
+		</div>
+	</nav>
+
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col col-lg-3">
+				<form action="" method="post">
+					<h2>Editeur de code</h2>
+					<div id="code-editor" class="text-center">
+						<pre id="editor"></pre>
+						<div id="error_message" class="error_message mb-2 text-left">>_ </div>
+						<div class="row justify-content-around">
+							<input type="submit" id="validate_code" value="Lancer" class="btn">
+							<input type="reset" id="clear_draw" value="Nettoyer dessin" class="btn">
+							<input type="reset" id="clear_all" value="Tout nettoyer" class="btn">
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="col col-lg-9">
+				<div class="row">
+					<div class="col col-lg-4">
+						<h2>Deloreannn draw</h2>
+					</div>
+					<div class="col col-lg-8 d-flex align-items-center">
+						<div class="d-flex align-items-center">
+							<label for="speed" class="mb-0 mr-1">Vitesse</label>
+							<input type="range" id="drawSpeed" name="speed" min="1" value="1" max="100" class="btn">
+							<p class="mb-0">88 mph</p>
+						</div>
+					</div>
+				</div>
+				<div id="draw_area"></div>
+			</div>
+		</div>
+	</div>
+
+	<script type="text/javascript" src="/javascripts/jquery-3.3.1.min.js"></script>
+	<script type="text/javascript" src="/javascripts/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/javascripts/svg.js"></script>
+	<script type="text/javascript" src="/javascripts/ace.js"></script>
+	<script type="text/javascript" src="/javascripts/main.js"></script>
+</body>
+</html>
