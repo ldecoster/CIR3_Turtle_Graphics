@@ -11,9 +11,13 @@
     //var limits = [0,0,0,0];
     var origin_offset = [0,0];
 
-    var speed = 0;
+    var speed = 5;
     var nb_line = 0;
 
+    speedBtn = document.getElementById("drawSpeed");
+    speedBtn.addEventListener("input", function(event) {
+        speed = event.target.value;
+    });
 
 
     var editor = ace.edit("editor");
@@ -70,10 +74,7 @@
         draw_zone.clear();
     });
 
-    speedBtn = document.getElementById("drawSpeed");
-    speedBtn.addEventListener("input", function(event) {
-        speed = event.target.value;
-    });
+    
 
     var convert_polar = function(distance,angle){
         current_angle = current_angle + angle;
@@ -84,9 +85,11 @@
         return([x_composante,y_composante]);
     }
 
-    var draw = function(x1,y1,speed){
+    var draw = function(x1,y1,speed_){
         properties = { color: current_color, width: current_thickness, linecap: current_line_end };
-        var delay = nb_line*speed;
+        var delay = nb_line*speed_;
+
+        //console.log(nb_line);
 
         putline(draw_zone,
                 origin_offset[0] + curent_position[0],
@@ -103,11 +106,13 @@
 
     // Affichage du graphe
 
-    var putline = function(context,x0, y0, x1, y1, properties,speed, delay_){
-        context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
+    var putline = function(context,x0, y0, x1, y1, properties,speed_, delay_){
+        console.log(speed_);
+        context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
     }
 
     var updateDisplay = function(command_array){
+       
         nb_line = 0;
         current_color = "#000000";
         for(let command of command_array){
@@ -119,6 +124,7 @@
                 e = command.val;
                 nb_line++;
                 draw(e[0],e[1],speed);
+                console.log(speed);
                 teleport(command.val[0],command.val[1]);
             }
 
