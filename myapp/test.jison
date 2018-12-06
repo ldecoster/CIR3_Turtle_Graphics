@@ -8,19 +8,21 @@
 ";"                     return 'SEMI_COLON'
 ","                     return 'COMMA'
 
-"DEF_ESPACE"            return 'SET_AREA'
-"DEF_ORIGINE"           return 'SET_ORIGIN'
-"AVANCER"               return 'MOVE'
-"TELEPORTER"            return 'TELEPORT'
-"TOURNER_GAUCHE"        return 'TURN_LEFT'
-"TOURNER_DROITE"        return 'TURN_RIGHT'
-"TOURNER_ANGLE"         return 'TURN_ANGLE'
-"COLOR"                 return 'COLOR'
+"DEF_ESPACE"                        return 'SET_AREA'
+"DEF_ORIGINE"                       return 'SET_ORIGIN'
+"AVANCER"                           return 'MOVE'
+"TELEPORTER"                        return 'TELEPORT'
+"TOURNER_GAUCHE"                    return 'TURN_LEFT'
+"TOURNER_DROITE"                    return 'TURN_RIGHT'
+"TOURNER_ANGLE"                     return 'TURN_ANGLE'
+"COLOR"                             return 'COLOR'
 
-[0-9]+("."[0-9]+)?\b    return 'NUMBER'
-[a-zA-Z0-9]+            return 'WORD'
-<<EOF>>                 return 'EOF'
-.                       return 'INVALID'
+
+[0-9]+("."[0-9]+)?\b                  return 'NUMBER'
+[a-zA-Z0-9]+                          return 'WORD'
+(\#[a-fA-F0-9]{6})                     return 'HEX_CODE'
+<<EOF>>                               return 'EOF'
+.                                     return 'INVALID'
 
 /lex
 
@@ -60,7 +62,7 @@ contenu
     | WORD
         {$$ = yytext;}
     | SEMI_COLON
-        {$$ = "Point virgoule";}
+        {$$ = "Point virgule";}
     ;
 
 commandes
@@ -113,8 +115,10 @@ commandes
             command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0",msg:"Les coordonnees doivent etre des nombres entiers e.g : TELEPORTER 42,57"});
         }
 
-
-
+    | 'COLOR' 'HEX_CODE' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"COLOR",val:$2, err :"0",msg:"ok"});
+        }
 
     | 'SET_AREA' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {
