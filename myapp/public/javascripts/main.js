@@ -7,12 +7,15 @@
     var current_line_end = 'round';
 
     //definitions des propriétés de la zone de travail
-    var size = [500,500];
+    var size = [1000,1000];
     //var limits = [0,0,0,0];
     var origin_offset = [0,0];
 
     var speed = 5;
     var nb_line = 0;
+    var angle_offset = 0;
+
+    //var delorean = draw_zone.rect(5, 5).fill('#f06');//image('public/images/car.png', 25, 25);
 
     speedBtn = document.getElementById("drawSpeed");
     speedBtn.addEventListener("input", function(event) {
@@ -77,12 +80,16 @@
     
 
     var convert_polar = function(distance,angle){
-        current_angle = current_angle + angle;
-        var x_composante =  curent_position[0] + Math.round(distance*Math.cos((Math.PI/180)*(current_angle + angle_offset*0)));
-        var y_composante =  curent_position[1] + Math.round(distance*Math.sin((Math.PI/180)*(current_angle + angle_offset*0)));
-        if(x_composante>size[0]){x_composante=size[0]};
-        if(y_composante>size[1]){x_composante=size[1]};
-        return([x_composante,y_composante]);
+        
+        var x_composante = Math.round(distance*Math.cos((Math.PI/180)*(angle + angle_offset))); 
+        var y_composante = Math.round(distance*Math.sin((Math.PI/180)*(angle + angle_offset)));
+        
+        console.log(x_composante);
+        console.log(y_composante);
+
+        //if(x_composante>size[0]){x_composante=size[0]};
+        //if(y_composante>size[1]){x_composante=size[1]};
+        return([parseInt(curent_position[0]) + parseInt(x_composante), parseInt(curent_position[1]) + parseInt(y_composante)]);
     }
 
     var draw = function(x1,y1,speed_){
@@ -108,30 +115,45 @@
 
     var putline = function(context,x0, y0, x1, y1, properties,speed_, delay_){
         console.log(speed_);
-        context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '<', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
+        context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '-', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
     }
 
     var updateDisplay = function(command_array){
-       
+        
         nb_line = 0;
+        current_angle = 0;
+
         current_color = "#000000";
         for(let command of command_array){
             if(command.cmd === 'TELEPORT'){
-                teleport(command.val[0],command.val[1]);		
+                s = command.val;
+                teleport(s[0],s[1]);
+                //delorean.move(s[0],s[1]);
+    		
             }
             if(command.cmd === 'MOVE'){
                 s = curent_position;
                 e = command.val;
                 nb_line++;
                 draw(e[0],e[1],speed);
-                console.log(speed);
-                teleport(command.val[0],command.val[1]);
+                teleport(e[0],e[1]);
+
+                //delorean.animate({ ease: '-', delay: speed * nb_line , duration :speed }).move(e[0],e[1]);
+                //delorean.move(s[0],s[1]);
+            }
+
+            if(command.cmd === 'DIST'){
+                e = convert_polar(command.val,current_angle);
+                nb_line++;
+                console.log(e);
+                draw(e[0],e[1],speed);
+                teleport(e[0],e[1]);
             }
 
             if(command.cmd === 'COLOR'){current_color = command.val;}
 
             if(command.cmd === 'TURN'){
-
+                current_angle = command.val + current_angle;
             }
         }
     };

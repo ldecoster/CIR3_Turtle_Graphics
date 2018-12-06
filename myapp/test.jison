@@ -85,7 +85,7 @@ commandes
         }
     | 'MOVE' 'NUMBER' 'SEMI_COLON'
         {
-            command_array.push({cmd:"MOVE",val:[], err :"1", msg:"il doit y avoir deux coordonnees e.g : AVANCER x,y"});
+            command_array.push({cmd:"DIST",val:$2, err :"0"});
         }
 
     | 'MOVE' 'WORD' 'COMMA' 'WORD' 'SEMI_COLON'
@@ -134,6 +134,11 @@ commandes
             //console.log("DEFINITION DE LORIGINE ");
             //console.log($2 + ',' + $4);
             command_array.push({cmd:"SET_ORIGIN",val:[$2,$4], err :"0"});
+        }
+    
+    | 'TURN_ANGLE' 'NUMBER' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TURN",val:$2, err :"0"});
         }
     ;
 

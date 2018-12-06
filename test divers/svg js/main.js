@@ -1,5 +1,8 @@
 (function(){
 
+
+
+
     //definitions des  propriétés de la Delorean
     var curent_position = [0,0];
     var current_angle = 0;
@@ -18,6 +21,16 @@
 
     //def contexte
     var draw_zone = SVG('drawing').size(size[0], size[1]);
+
+
+
+
+    speed = 100;
+    var rect = draw_zone.rect(5, 5).fill('#f06');//.move(500,500).animate({duration : speed, ease: '<', delay: 0 });
+    //rect.attr('x', '10%').animate().attr('x', '50%');
+    rect.move(50,50);
+    rect.animate({ ease: '<', delay: 100, duration :1500 }).move(400,400);
+    rect.animate({ ease: '<', delay: 1500, duration :1500 }).move(10,400);
 
     //def fonctions
     var putline = function(context,x0, y0, x1, y1, properties){
