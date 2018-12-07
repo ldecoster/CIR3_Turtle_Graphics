@@ -108,10 +108,8 @@ commandes
 
     | 'MOVE' 'VARNAME' 'SEMI_COLON'
         {
-            command_array.push({cmd:"DIST",val:$2, err :"0"});
+            command_array.push({cmd:"DIST",varname:$2, err :"0"});
         }
-
-    
 
     | 'TELEPORT' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {

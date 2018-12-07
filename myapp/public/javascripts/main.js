@@ -80,11 +80,14 @@
     
 
     var convert_polar = function(distance,angle){
+
+        //console.log(distance);
+
     	var x_composante = Math.round(distance*Math.cos((Math.PI/180)*(angle + angle_offset))); 
         var y_composante = Math.round(distance*Math.sin((Math.PI/180)*(angle + angle_offset)));
 
-        console.log(x_composante);
-        console.log(y_composante);
+        //console.log(x_composante);
+        //console.log(y_composante);
 
         //if(x_composante>size[0]){x_composante=size[0]};
         //if(y_composante>size[1]){x_composante=size[1]};
@@ -127,24 +130,30 @@
             if(command.cmd === 'TELEPORT'){
                 s = command.val;
                 teleport(s[0],s[1]);
-                //delorean.move(s[0],s[1]);
-    		
+
             }
+
             if(command.cmd === 'MOVE'){
                 s = curent_position;
                 e = command.val;
+                
+                if(e[0][0] === '$' ){e[0] = parseInt(variable[command.val[0]]);}
+                if(e[1][0] === '$' ){e[1] = parseInt(variable[command.val[1]]);}
+
+                console.log(e);
+            
                 nb_line++;
                 draw(e[0],e[1],speed);
                 teleport(e[0],e[1]);
-
-                //delorean.animate({ ease: '-', delay: speed * nb_line , duration :speed }).move(e[0],e[1]);
-                //delorean.move(s[0],s[1]);
             }
 
             if(command.cmd === 'DIST'){
                 var R = 0;
-                if(command.val[1] === '$'){
-                    R = variable[command.val];
+                //console.log();
+
+                if(typeof(command.varname)!== 'undefined' ){
+                    R = parseInt(variable[command.varname]);
+                    //console.log(command.varname);
                 }
                 else
                 {
