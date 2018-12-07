@@ -5,7 +5,7 @@
     var current_color = "#000000";
     var current_thickness = 1;
     var current_line_end = 'round';
-
+    var variable = new Array();
     //definitions des propriétés de la zone de travail
     var size = [1000,1000];
     //var limits = [0,0,0,0];
@@ -142,9 +142,19 @@
             }
 
             if(command.cmd === 'DIST'){
-                e = convert_polar(command.val,current_angle);
+                var R = 0;
+                if(command.val[1] === '$'){
+                    R = variable[command.val];
+                }
+                else
+                {
+                    R = parseInt(command.val)
+                }
+
+                e = convert_polar(R,current_angle);
                 nb_line++;
                 //console.log(e);
+
                 draw(e[0],e[1],speed);
                 teleport(e[0],e[1]);
             }
@@ -155,6 +165,15 @@
             	var angle = parseInt(command.val);
                 current_angle = angle + current_angle;
             }
+
+            if(command.cmd === 'VAR'){
+                variable[command.varname] = command.val;
+            }
+
+            if(command.cmd === 'DBG_VAR'){
+                console.log(variable[command.varname]);
+            }
+
         }
     };
 

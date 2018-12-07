@@ -5,25 +5,28 @@
 %options case-insensitive
 %%
 
-\s+                     /* skip whitespace */
-";"                     return 'SEMI_COLON'
-","                     return 'COMMA'
+\s+                                              /* skip whitespace */
+";"                                                 return 'SEMI_COLON'
+","                                                 return 'COMMA'
+"="                                                 return 'EQ'
 
-"DEF_ESPACE"                        return 'SET_AREA'
-"DEF_ORIGINE"                       return 'SET_ORIGIN'
-"AVANCER"                           return 'MOVE'
-"TELEPORTER"                        return 'TELEPORT'
-"TOURNER_GAUCHE"                    return 'TURN_LEFT'
-"TOURNER_DROITE"                    return 'TURN_RIGHT'
-"TOURNER_ANGLE"                     return 'TURN_ANGLE'
-"COULEUR"                           return 'COLOR'
+"DEF_ESPACE"                                        return 'SET_AREA'
+"DEF_ORIGINE"                                       return 'SET_ORIGIN'
+"AVANCER"                                           return 'MOVE'
+"TELEPORTER"                                        return 'TELEPORT'
+"TOURNER_GAUCHE"                                    return 'TURN_LEFT'
+"TOURNER_DROITE"                                    return 'TURN_RIGHT'
+"TOURNER_ANGLE"                                     return 'TURN_ANGLE'
+"COULEUR"                                           return 'COLOR'
+"VAR"                                               return 'VAR'
 
 
-[0-9]+("."[0-9]+)?\b                  return 'NUMBER'
-[a-zA-Z0-9]+                          return 'WORD'
-(\#[a-fA-F0-9]{6})                     return 'HEX_CODE'
-<<EOF>>                               return 'EOF'
-.                                     return 'INVALID'
+[0-9]+("."[0-9]+)?\b                                                return 'NUMBER'
+[a-zA-Z0-9]+                                                        return 'WORD'
+\$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)                        return 'VARNAME'
+(\#[a-fA-F0-9]{6})                                                  return 'HEX_CODE'
+<<EOF>>                                                             return 'EOF'
+.                                                                   return 'INVALID'
 
 /lex
 
@@ -79,41 +82,40 @@ commandes
             command_array.push({cmd:"MOVE",val:[$2,$4], err :"0", msg:"ok"});
             
         }
-
-    | 'MOVE' 'NUMBER' 'COMMA' 'SEMI_COLON'
+    
+    | 'MOVE' 'VARNAME' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {
-            command_array.push({cmd:"MOVE",val:[], err :"1", msg:"il doit y avoir deux coordonnees e.g : AVANCER x,y"});
+            command_array.push({cmd:"MOVE",val:[$2,$4], err :"0", msg:"ok"});
+            
         }
+
+    | 'MOVE' 'NUMBER' 'COMMA' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"MOVE",val:[$2,$4], err :"0", msg:"ok"});
+            
+        }
+
+    | 'MOVE' 'VARNAME' 'COMMA' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"MOVE",val:[$2,$4], err :"0", msg:"ok"});
+            
+        }
+    
     | 'MOVE' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"DIST",val:$2, err :"0"});
         }
 
-    | 'MOVE' 'WORD' 'COMMA' 'WORD' 'SEMI_COLON'
+    | 'MOVE' 'VARNAME' 'SEMI_COLON'
         {
-            command_array.push({cmd:"MOVE",val:[], err :"1", msg:"Les coordonnees doivent etre des nombres entiers e.g : AVANCER 42,57"});
+            command_array.push({cmd:"DIST",val:$2, err :"0"});
         }
 
-
+    
 
     | 'TELEPORT' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0"});
-        }
-
-    | 'TELEPORT' 'NUMBER' 'COMMA' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0", msg:"il doit y avoir deux coordonnees e.g : TELEPORTER x,y"});
-        }
-
-    | 'TELEPORT' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0", msg:"il doit y avoir deux coordonnees e.g : TELEPORTER x,y"});
-        }
-
-    | 'TELEPORT' 'WORD' 'COMMA' 'WORD' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0",msg:"Les coordonnees doivent etre des nombres entiers e.g : TELEPORTER 42,57"});
         }
 
     | 'COLOR' 'HEX_CODE' 'SEMI_COLON'
@@ -123,11 +125,8 @@ commandes
 
     | 'SET_AREA' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {
-            //console.log("DEFINITION TAILLE CANVAS");
-            //console.log($2 + ',' + $4);
             command_array.push({cmd:"SET_AREA",val:[$2,$4], err :"0"});
         }
-
 
         
     | 'SET_ORIGIN' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
@@ -136,7 +135,17 @@ commandes
             //console.log($2 + ',' + $4);
             command_array.push({cmd:"SET_ORIGIN",val:[$2,$4], err :"0"});
         }
-    
+
+    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"VAR",val: $4, varname: $2, err :"0"});
+        }
+
+    | 'VAR' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"DBG_VAR", varname: $2, err :"0"});
+        }
+
     | 'TURN_ANGLE' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"TURN",val:$2, err :"0"});
