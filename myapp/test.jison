@@ -16,7 +16,7 @@
 "TOURNER_GAUCHE"                    return 'TURN_LEFT'
 "TOURNER_DROITE"                    return 'TURN_RIGHT'
 "TOURNER_ANGLE"                     return 'TURN_ANGLE'
-"COULEUR                            return 'COLOR'
+"COULEUR"                           return 'COLOR'
 
 
 [0-9]+("."[0-9]+)?\b                  return 'NUMBER'
