@@ -80,10 +80,9 @@
     
 
     var convert_polar = function(distance,angle){
-        
-        var x_composante = Math.round(distance*Math.cos((Math.PI/180)*(angle + angle_offset))); 
+    	var x_composante = Math.round(distance*Math.cos((Math.PI/180)*(angle + angle_offset))); 
         var y_composante = Math.round(distance*Math.sin((Math.PI/180)*(angle + angle_offset)));
-        
+
         console.log(x_composante);
         console.log(y_composante);
 
@@ -114,7 +113,7 @@
     // Affichage du graphe
 
     var putline = function(context,x0, y0, x1, y1, properties,speed_, delay_){
-        console.log(speed_);
+        //console.log(speed_);
         context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '-', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
     }
 
@@ -145,7 +144,7 @@
             if(command.cmd === 'DIST'){
                 e = convert_polar(command.val,current_angle);
                 nb_line++;
-                console.log(e);
+                //console.log(e);
                 draw(e[0],e[1],speed);
                 teleport(e[0],e[1]);
             }
@@ -153,7 +152,8 @@
             if(command.cmd === 'COLOR'){current_color = command.val;}
 
             if(command.cmd === 'TURN'){
-                current_angle = command.val + current_angle;
+            	var angle = parseInt(command.val);
+                current_angle = angle + current_angle;
             }
         }
     };
