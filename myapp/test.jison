@@ -2,6 +2,7 @@
 
 /* lexical grammar */
 %lex
+%options case-insensitive
 %%
 
 \s+                     /* skip whitespace */
@@ -15,7 +16,7 @@
 "TOURNER_GAUCHE"                    return 'TURN_LEFT'
 "TOURNER_DROITE"                    return 'TURN_RIGHT'
 "TOURNER_ANGLE"                     return 'TURN_ANGLE'
-"COLOR"                             return 'COLOR'
+"COULEUR                            return 'COLOR'
 
 
 [0-9]+("."[0-9]+)?\b                  return 'NUMBER'
