@@ -17,7 +17,7 @@ var getJison = function(stringInput) {
 	var fs = require("fs");
 	var jison = require("jison");
 
-	var bnf = fs.readFileSync("test.jison", "utf8");
+	var bnf = fs.readFileSync("grammar.jison", "utf8");
 	var parser = new jison.Parser(bnf);
 
 	var command_array = parser.parse(stringInput);
