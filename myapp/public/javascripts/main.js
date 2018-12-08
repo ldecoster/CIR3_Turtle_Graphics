@@ -42,8 +42,6 @@
             data : JSON.stringify(data),
             dataType : 'json',
             success : function(data) {
-                //console.log('Data renvoyée par le serveur :'); 
-                //console.log(data);
                 updateDisplay(data);
             },
             error : function(e) {
@@ -114,7 +112,6 @@
     var teleport = function(x,y){curent_position = [x,y];}
 
     // Affichage du graphe
-
     var putline = function(context,x0, y0, x1, y1, properties,speed_, delay_){
         //console.log(speed_);
         context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '-', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
@@ -130,7 +127,6 @@
             if(command.cmd === 'TELEPORT'){
                 s = command.val;
                 teleport(s[0],s[1]);
-
             }
 
             if(command.cmd === 'MOVE'){
@@ -149,7 +145,6 @@
 
             if(command.cmd === 'DIST'){
                 var R = 0;
-                //console.log();
 
                 if(typeof(command.varname)!== 'undefined' ){
                     R = parseInt(variable[command.varname]);
