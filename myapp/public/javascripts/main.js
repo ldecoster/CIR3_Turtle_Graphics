@@ -33,12 +33,6 @@
     	speed = event.target.value;
     });
 
-    var clearDrawBtn = document.getElementById("clear_draw");
-    clearDrawBtn.addEventListener("click", function(event) {
-    	event.preventDefault();
-    	draw_zone.clear();
-    });
-
     var clearAllBtn = document.getElementById("clear_all");
     clearAllBtn.addEventListener("click", function(event) {
     	event.preventDefault();
@@ -48,26 +42,45 @@
     });
 
     var launchBtn = document.getElementById("validate_code");
-    launchBtn.addEventListener("click", ajaxGrammarFunction);
+    launchBtn.addEventListener("click", function(event) {
+    	event.preventDefault();
+
+    	// Temporaire
+    	curent_position = [0,0];
+    	current_angle = 0;
+    	current_color = "#000000";
+    	current_thickness = 1;
+    	current_line_end = 'round';
+    	// Fin Temporaire
+
+    	draw_zone.clear();
+    	errorDiv.text(">_ ");
+    	var code = editor.getValue();
+    	ajaxGrammarFunction(code);
+    });
+
+    var saveButton = document.getElementById("saveButtonsGroup");
+    saveButton.addEventListener("click", function(event) {
+    	
+    });
 
 
     /* Partie AJAX */
 
     // pas de mot-clé var ici car phénomène d'hoisting
-    function ajaxGrammarFunction(event) {
-    	event.preventDefault();
-    	code = editor.getValue();
-    	errorDiv.text(">_ ");
-
+    function ajaxGrammarFunction(code) {
     	var data = {'data' : code};
     	$.ajax({
     		type : "POST",
     		contentType : "application/json",
-    		url : window.location,
+    		url : window.location+'grammar',
     		data : JSON.stringify(data),
     		dataType : 'json',
     		success : function(data) {
     			updateDisplay(data);
+
+    			var drawing = draw_zone.svg();
+    			ajaxSaveFunction(drawing);
     		},
     		error : function(e) {
     			alert("Erreur de commande !");
@@ -87,6 +100,25 @@
         });
     };
 
+    // Enregistre le dessin réalisé
+    function ajaxSaveFunction(drawing) {
+    	console.log('CC');
+    	var data = {'drawing' : drawing};
+    	$.ajax({
+    		type : "POST",
+    		contentType : "application/json",
+    		url : window.location+'save',
+    		data : JSON.stringify(data),
+    		dataType : 'text',
+    		success : function(res) {
+    			console.log(res);
+    		},
+    		error : function(e) {
+    			console.log('Error');
+    			console.log(e);
+    		}
+    	});
+    };
 
     /* Partie SVG */
 

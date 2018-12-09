@@ -1,13 +1,13 @@
 var express = require('express');
-//var bodyParser = require('body-parser');
 
 var router = express.Router();
+
 /* GET server page. */
-router.get('/', function(req, res, next) {
-	res.render('index', { title: 'Turtle Graphic' });
+router.get('/', function(req, res) {
+	res.render('index');
 });
 
-router.post('/', function(req, res, next) {
+router.post('/grammar', function(req, res) {
 	console.log('Get data : ' + JSON.stringify(req.body));
 	var command_array = getJison(req.body.data);
 	res.send(command_array);
@@ -25,6 +25,19 @@ var getJison = function(stringInput) {
 	console.log(command_array);
 	return command_array;
 };
+
+router.post('/save', function(req, res) {
+	console.log('Perfoming save request...');
+	var svgContent = req.body.drawing;
+	var fs = require("fs");
+	fs.writeFile('svgResult.svg', svgContent, function(err) {
+		if(err) {
+			throw err;
+		}
+		console.log('File saved !');
+		res.send('Fichier enregistré avec succès');
+	});
+});
 
 
 module.exports = router;
