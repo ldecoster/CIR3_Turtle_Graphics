@@ -30,13 +30,30 @@ router.post('/save', function(req, res) {
 	console.log('Perfoming save request...');
 	var svgContent = req.body.drawing;
 	var fs = require("fs");
-	fs.writeFile('svgResult.svg', svgContent, function(err) {
-		if(err) {
-			throw err;
-		}
-		console.log('File saved !');
-		res.send('Fichier enregistré avec succès');
+	var gm = require("gm");
+	var response = '';
+
+	// Enregistrement du SVG
+	fs.writeFileSync('drawingResult.svg', svgContent);
+
+	// Enregistrement du JPG
+	gm("drawingResult.svg")
+	.background('#FFFFFF')
+	.write('drawingResult.jpg', function (err) {
+		if (err) return console.dir(arguments)
+			console.log(this.outname + " created  ::  " + arguments[3])
 	});
+
+	// Enregistrement du PNG
+	gm("drawingResult.svg")
+	.background('transparent')
+	.write('drawingResult.png', function (err) {
+		if (err) return console.dir(arguments)
+			console.log(this.outname + " created  ::  " + arguments[3])
+	});
+
+	console.log('Files saved !');
+	res.send('Fichiers enregistré avec succès');
 });
 
 

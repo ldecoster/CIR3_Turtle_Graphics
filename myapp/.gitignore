@@ -28,4 +28,4 @@ coverage
 benchmarks/graphs
 
 # Temp images
-svgResult.svg
+drawingResult.*
