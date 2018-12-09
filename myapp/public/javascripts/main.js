@@ -158,42 +158,44 @@
         context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '-', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
     };
 
-    var updateDisplay = function(command_array){
+	var updateDisplay = function(command_array){
+        
+        nb_line = 0;
+        current_angle = 0;
 
-    	nb_line = 0;
-    	current_angle = 0;
+        current_color = "#000000";
+        for(let command of command_array){
+            if(command.cmd === 'TELEPORT'){
+                s = command.val;
+                teleport(s[0],s[1]);
 
-    	current_color = "#000000";
-    	for(let command of command_array){
-    		if(command.cmd === 'TELEPORT'){
-    			s = command.val;
-    			teleport(s[0],s[1]);
-    		}
+            }
 
-    		if(command.cmd === 'MOVE'){
-    			s = curent_position;
-    			e = command.val;
+            if(command.cmd === 'MOVE'){
+                s = curent_position;
+                e = command.val;
+                
+                if(e[0][0] === '$' ){e[0] = parseInt(variable[command.val[0]]);}
+                if(e[1][0] === '$' ){e[1] = parseInt(variable[command.val[1]]);}
 
-    			if(e[0][0] === '$' ){e[0] = parseInt(variable[command.val[0]]);}
-    			if(e[1][0] === '$' ){e[1] = parseInt(variable[command.val[1]]);}
+                console.log(e);
+            
+                nb_line++;
+                draw(e[0],e[1],speed);
+                teleport(e[0],e[1]);
+            }
 
-    			console.log(e);
+            if(command.cmd === 'DIST'){
+                var R = 0;
+                //console.log();
 
-    			nb_line++;
-    			draw(e[0],e[1],speed);
-    			teleport(e[0],e[1]);
-    		}
-
-    		if(command.cmd === 'DIST'){
-    			var R = 0;
-
-    			if(typeof(command.varname)!== 'undefined' ){
-    				R = parseInt(variable[command.varname]);
+                if(typeof(command.varname)!== 'undefined' ){
+                    R = parseInt(variable[command.varname]);
                     //console.log(command.varname);
                 }
                 else
                 {
-                	R = parseInt(command.val)
+                    R = parseInt(command.val)
                 }
 
                 e = convert_polar(R,current_angle);
@@ -204,21 +206,28 @@
                 teleport(e[0],e[1]);
             }
 
-            if(command.cmd === 'COLOR'){
-            	current_color = command.val;
-            }
+            if(command.cmd === 'COLOR'){current_color = command.val;}
 
             if(command.cmd === 'TURN'){
-            	let angle = parseInt(command.val);
-            	current_angle = angle + current_angle;
+				var angle = command.val;
+				
+				console.log(angle);
+
+				if(angle[0]=== '$' ){angle = variable[command.val];}
+
+				
+
+				current_angle = parseInt(angle) + current_angle;
+				
+				console.log(current_angle);
             }
 
             if(command.cmd === 'VAR'){
-            	variable[command.varname] = command.val;
+                variable[command.varname] = command.val;
             }
 
             if(command.cmd === 'DBG_VAR'){
-            	console.log(variable[command.varname]);
+                console.log(variable[command.varname]);
             }
 
         }

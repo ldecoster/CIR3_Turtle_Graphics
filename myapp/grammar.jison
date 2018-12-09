@@ -14,12 +14,13 @@
 "DEF_ORIGINE"                                       return 'SET_ORIGIN'
 "AVANCER"                                           return 'MOVE'
 "TELEPORTER"                                        return 'TELEPORT'
-"TOURNER_GAUCHE"                                    return 'TURN_LEFT'
-"TOURNER_DROITE"                                    return 'TURN_RIGHT'
-"TOURNER_ANGLE"                                     return 'TURN_ANGLE'
+"GAUCHE"                                            return 'LEFT'
+"DROITE"                                            return 'RIGHT'
+"TOURNER"                                           return 'TURN'
 "COULEUR"                                           return 'COLOR'
 "VAR"                                               return 'VAR'
-
+"REPETER"                                           return 'REPEAT'
+"FIN REPETER"                                       return 'E_REPEAT'
 
 [0-9]+("."[0-9]+)?\b                                                return 'NUMBER'
 [a-zA-Z0-9]+                                                        return 'WORD'
@@ -144,10 +145,26 @@ commandes
             command_array.push({cmd:"DBG_VAR", varname: $2, err :"0"});
         }
 
-    | 'TURN_ANGLE' 'NUMBER' 'SEMI_COLON'
+    | 'TURN' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"TURN",val:$2, err :"0"});
         }
+    
+    | 'TURN' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TURN",val:$2, err :"0"});
+        }
+
+    | 'TURN' 'RIGHT' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TURN",val:90, err :"0"});
+        }
+    
+    | 'TURN' 'LEFT' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TURN",val:-90, err :"0"});
+        }
+    
     ;
 
 
