@@ -22,6 +22,11 @@
 "REPETER"                                           return 'REPEAT'
 "FIN REPETER"                                       return 'E_REPEAT'
 
+"*"                                                 return '*'
+"/"                                                 return '/'
+"-"                                                 return '-'
+"+"                                                 return '+'
+
 [0-9]+("."[0-9]+)?\b                                                return 'NUMBER'
 [a-zA-Z0-9]+                                                        return 'WORD'
 \$([a-zA-Z_\x7f-\xff][a-zA-Z0-9_\x7f-\xff]*)                        return 'VARNAME'
@@ -140,9 +145,30 @@ commandes
             command_array.push({cmd:"VAR",val: $4, varname: $2, err :"0"});
         }
 
+    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"VAR=VAR",val: $4, varname: $2, err :"0"});
+        }
+    
+    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '+'   'SEMI_COLON'
+        {
+            command_array.push({cmd:"VAR",val: $4, varname: $2, err :"0"});
+        }
+
+
     | 'VAR' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"DBG_VAR", varname: $2, err :"0"});
+        }
+    
+    | 'REPEAT' 'NUMBER' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"REPEAT",val:$2,index : command_array.length, err :"0"});
+        }
+    
+    | 'E_REPEAT' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"E_REPEAT",val:$2,index : command_array.length, err :"0"});
         }
 
     | 'TURN' 'NUMBER' 'SEMI_COLON'
