@@ -245,7 +245,7 @@
 				//console.log("mode boucle activé")
 				nb_cmd = 0;
 				loop_boundaries[1] = command.index;
-					for(let i = 0; i<loop_iteration;i++){
+					for(let i = 0; i<loop_iteration-1;i++){
 						for(let j = loop_boundaries[0]+1; j<loop_boundaries[1];j++){
 							nb_cmd++;
 							command_array.splice(loop_boundaries[1]+nb_cmd,0,command_array[j]);
