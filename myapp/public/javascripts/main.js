@@ -14,10 +14,9 @@
 	loop_iteration;
 
 
-
-	var loop_enable = 0;
 	var loop_boundaries = new Array();
-	var loop_command  = new Array();
+	var loop_offset = 0;
+
 
 	var draw_zone = SVG('draw_area');
     var speed = 5;
@@ -183,8 +182,6 @@
 		
     	for(let command of command_array){
 
-			console.log("loop_enable haut du code : " +loop_enable);
-
     		if(command.cmd === 'TELEPORT'){
     			s = command.val;
     			teleport(s[0],s[1]);
@@ -238,26 +235,26 @@
 			
 			if(command.cmd === 'REPEAT'){
 				loop_iteration = command.val;
-				loop_boundaries[0] = command.index;
+				loop_boundaries[0] = loop_offset + command.index;
 			}
 			
 			if(command.cmd === 'E_REPEAT'){
 				//console.log("mode boucle activé")
 				nb_cmd = 0;
-				loop_boundaries[1] = command.index;
+				loop_boundaries[1] = loop_offset + command.index;
 					for(let i = 0; i<loop_iteration-1;i++){
 						for(let j = loop_boundaries[0]+1; j<loop_boundaries[1];j++){
 							nb_cmd++;
 							command_array.splice(loop_boundaries[1]+nb_cmd,0,command_array[j]);
 						}
-	
 					}
-					
-				
-				
+					loop_offset =loop_offset+nb_cmd;
+					nb_cmd = 0;
+					loop_boundaries = [0,0];
+					loop_iteration = 0;
 			}
-			console.log(loop_command);
-        }
+		}
+		//console.log(command_array);
     };
 })();
 
