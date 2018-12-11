@@ -11,11 +11,9 @@
 	origin_offset,
 	nb_line,
 	angle_offset,
-	loop_iteration;
-
-
-	var loop_boundaries = new Array();
-	var loop_offset = 0;
+	loop_iteration,
+	loop_boundaries,
+	loop_offset;
 
 
 	var draw_zone = SVG('draw_area');
@@ -33,7 +31,9 @@
 		variable = new Array();
 		origin_offset = [0,0];
 		nb_line = 0;
-		angle_offset = 0;	
+		angle_offset = 0;
+		loop_boundaries = new Array();
+		loop_offset  = 0;
 	};
 
 	init(1050, 600);
