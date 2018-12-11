@@ -2,27 +2,43 @@
 
 	/* Initialisation */
 
-	var draw_zone = SVG('draw_area').size(1050, 600);
-	var curent_position = [0,0];
-	var current_angle = 0;
-	var current_color = "#000000";
-	var current_thickness = 1;
-	var current_line_end = 'round';
-	var variable = new Array();
-    //definitions des propriétés de la zone de travail
-    var size = [1000,1000];
-    //var limits = [0,0,0,0];
-    var origin_offset = [0,0];
+	var current_position, 
+	current_angle, 
+	current_color, 
+	current_thickness, 
+	current_line_end, 
+	variable,
+	origin_offset,
+	nb_line,
+	angle_offset;
 
+	var draw_zone = SVG('draw_area');
     var speed = 5;
-    var nb_line = 0;
-    var angle_offset = 0;
-
-    //var delorean = draw_zone.rect(5, 5).fill('#f06');//image('public/images/car.png', 25, 25);
-
     var editor = ace.edit("editor");
     editor.setTheme("ace/theme/twilight");
+    
+	var init = function(canvasWidth, canvasHeight) {
+		draw_zone.size(canvasWidth, canvasHeight);
+		curent_position = [0,0];
+		current_angle = 0;
+		current_color = "#000000";
+		current_thickness = 1;
+		current_line_end = 'round';
+		variable = new Array();
+		origin_offset = [0,0];
+		nb_line = 0;
+		angle_offset = 0;	
+	};
 
+	init(1050, 600);
+
+	
+    //definitions des propriétés de la zone de travail
+    //var size = [1000,1000];
+    //var limits = [0,0,0,0];
+
+    
+    //var delorean = draw_zone.rect(5, 5).fill('#f06');//image('public/images/car.png', 25, 25);
 
     /* Partie manipulation du DOM */
 
@@ -45,13 +61,7 @@
     launchBtn.addEventListener("click", function(event) {
     	event.preventDefault();
 
-    	// Temporaire
-    	curent_position = [0,0];
-    	current_angle = 0;
-    	current_color = "#000000";
-    	current_thickness = 1;
-    	current_line_end = 'round';
-    	// Fin Temporaire
+    	init(1050, 600);
 
     	draw_zone.clear();
     	errorDiv.text(">_ ");
@@ -104,7 +114,6 @@
 
     // Enregistre le dessin réalisé
     function ajaxSaveFunction(drawing) {
-    	console.log('CC');
     	var data = {'drawing' : drawing};
     	$.ajax({
     		type : "POST",
