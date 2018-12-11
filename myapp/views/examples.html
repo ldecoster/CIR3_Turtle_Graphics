@@ -183,12 +183,27 @@ AVANCER 1185,101;</textarea>
 			</div>
 			<div class="col-4 text-center">
 				<div class="form-group" id="divExemple2">
-					<h2>Exemple inutile</h2>
-					<textarea class="form-control" name="exemple2" id="exemple2" rows="10" readonly>TELEPORTER 110,12;
-AVANCER 164,4;
-AVANCER 210,11;
-AVANCER 225,86;
-AVANCER 111,12;</textarea>
+					<h2>Test des boucles</h2>
+					<textarea class="form-control" name="exemple2" id="exemple2" rows="10" readonly>COULEUR #0000FF;
+REPETER 3;
+TELEPORTER 100,100;
+TOURNER 20;
+AVANCER 25;
+FIN REPETER;
+
+COULEUR #FF0000;
+REPETER 8;
+TELEPORTER 200,100;
+TOURNER 20;
+AVANCER 25;
+FIN REPETER;
+
+COULEUR #00FF00;
+REPETER 10;
+TELEPORTER 300,100;
+TOURNER 20;
+AVANCER 25;
+FIN REPETER;</textarea>
 					<input type="button" class="btn btn-block btn-primary float-right mt-2 mb-2" value="Copier l'exemple dans le presse papier">
 				</div>				
 			</div>
