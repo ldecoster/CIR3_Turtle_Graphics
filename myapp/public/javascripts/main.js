@@ -13,14 +13,16 @@
 	angle_offset,
 	loop_iteration,
 	loop_boundaries,
-	loop_offset;
+	loop_offset,
+	rangeCurrentValue,
+	rangeMaxValue,
+	speed;
 
 
 	var draw_zone = SVG('draw_area');
-    var speed = 5;
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/twilight");
-    
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/twilight");
+
 	var init = function(canvasWidth, canvasHeight) {
 		draw_zone.size(canvasWidth, canvasHeight);
 		curent_position = [0,0];
@@ -34,10 +36,12 @@
 		angle_offset = 0;
 		loop_boundaries = new Array();
 		loop_offset  = 0;
+		rangeCurrentValue = $('#drawSpeed').val();
+		rangeMaxValue = $('#drawSpeed').attr("max");
+		speed = rangeMaxValue - rangeCurrentValue + 1;
 	};
 
 	init(1050, 600);
-
 	
     //definitions des propriétés de la zone de travail
     //var size = [1000,1000];
@@ -50,9 +54,11 @@
 
     var errorDiv = $('#error_message');
 
-    var speedBtn = document.getElementById("drawSpeed");
-    speedBtn.addEventListener("input", function(event) {
-    	speed = event.target.value;
+    var rangeBtn = document.getElementById("drawSpeed");
+    rangeBtn.addEventListener("input", function(event) {
+    	rangeCurrentValue = event.target.value;
+    	speed = rangeMaxValue - rangeCurrentValue + 1;
+    	console.log(rangeCurrentValue);
     });
 
     var clearAllBtn = document.getElementById("clear_all");
@@ -98,7 +104,7 @@
     			updateDisplay(data);
 
     			var drawing = draw_zone.svg();
-    			ajaxSaveFunction(drawing);
+    			//ajaxSaveFunction(drawing);
     		},
     		error : function(e) {
     			alert("Erreur de commande !");
@@ -148,9 +154,9 @@
         return([parseInt(curent_position[0]) + parseInt(x_composante), parseInt(curent_position[1]) + parseInt(y_composante)]);
     };
 
-    var draw = function(x1,y1,speed_){
+    var draw = function(x1,y1){
     	properties = { color: current_color, width: current_thickness, linecap: current_line_end };
-    	var delay = nb_line*speed_;
+    	var delay = nb_line*speed;
 
         //console.log(nb_line);
 
@@ -160,7 +166,6 @@
         	origin_offset[0] + x1, 
         	origin_offset[1] + y1,
         	properties,
-        	speed,
         	delay
         	);
     };
@@ -170,23 +175,27 @@
     };
 
     // Affichage du graphe
-    var putline = function(context,x0, y0, x1, y1, properties,speed_, delay_){
-        //console.log(speed_);
-        context.line(x0,y0,x1,y1).stroke(properties).animate({duration : speed_, ease: '-', delay: delay_ }).during(function(t, morph) {this.attr({x2:morph(x0, x1), y2: morph(y0, y1)})});
+    var putline = function(context,x0, y0, x1, y1, properties, delay_){
+    	context.line(x0,y0,x1,y1)
+    	.stroke(properties)
+    	.animate(speed, '-', delay_)
+    	.during(function(t, morph) {
+    		this.attr({x2:morph(x0, x1), y2:morph(y0, y1)})
+    	});
     };
 
     var updateDisplay = function(command_array){
     	nb_line = 0;
     	current_angle = 0;
-		current_color = "#000000";
-		
+    	current_color = "#000000";
+
     	for(let command of command_array){
 
     		if(command.cmd === 'TELEPORT'){
     			s = command.val;
     			teleport(s[0],s[1]);
-			}
-			
+    		}
+
     		if(command.cmd === 'MOVE'){
     			s = curent_position;
     			e = command.val;
@@ -194,7 +203,7 @@
     			if(e[1][0] === '$' ){e[1] = parseInt(variable[command.val[1]]);}
     			//console.log(e);
     			nb_line++;
-    			draw(e[0],e[1],speed);
+    			draw(e[0],e[1]);
     			teleport(e[0],e[1]);
     		}
 
@@ -211,11 +220,17 @@
                 e = convert_polar(R,current_angle);
                 nb_line++;
                 //console.log(e);
-                draw(e[0],e[1],speed);
+                draw(e[0],e[1]);
                 teleport(e[0],e[1]);
             }
 
-            if(command.cmd === 'COLOR'){current_color = command.val;}
+            if(command.cmd === 'COLOR'){
+            	current_color = command.val;
+            }
+
+            if(command.cmd === 'THICKNESS') {
+            	current_thickness = command.val;
+            }
 
             if(command.cmd === 'TURN'){
             	var angle = command.val;
@@ -231,30 +246,30 @@
 
             if(command.cmd === 'DBG_VAR'){
             	console.log(variable[command.varname]);
-			}
-			
-			if(command.cmd === 'REPEAT'){
-				loop_iteration = command.val;
-				loop_boundaries[0] = loop_offset + command.index;
-			}
-			
-			if(command.cmd === 'E_REPEAT'){
+            }
+
+            if(command.cmd === 'REPEAT'){
+            	loop_iteration = command.val;
+            	loop_boundaries[0] = loop_offset + command.index;
+            }
+
+            if(command.cmd === 'E_REPEAT'){
 				//console.log("mode boucle activé")
 				nb_cmd = 0;
 				loop_boundaries[1] = loop_offset + command.index;
-					for(let i = 0; i<loop_iteration-1;i++){
-						for(let j = loop_boundaries[0]+1; j<loop_boundaries[1];j++){
-							nb_cmd++;
-							command_array.splice(loop_boundaries[1]+nb_cmd,0,command_array[j]);
-						}
+				for(let i = 0; i<loop_iteration-1;i++){
+					for(let j = loop_boundaries[0]+1; j<loop_boundaries[1];j++){
+						nb_cmd++;
+						command_array.splice(loop_boundaries[1]+nb_cmd,0,command_array[j]);
 					}
-					loop_offset =loop_offset+nb_cmd;
-					nb_cmd = 0;
-					loop_boundaries = [0,0];
-					loop_iteration = 0;
+				}
+				loop_offset =loop_offset+nb_cmd;
+				nb_cmd = 0;
+				loop_boundaries = [0,0];
+				loop_iteration = 0;
 			}
 		}
 		//console.log(command_array);
-    };
+	};
 })();
 

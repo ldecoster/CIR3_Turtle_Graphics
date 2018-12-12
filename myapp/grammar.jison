@@ -18,6 +18,7 @@
 "DROITE"                                            return 'RIGHT'
 "TOURNER"                                           return 'TURN'
 "COULEUR"                                           return 'COLOR'
+"EPAISSEUR"                                         return 'THICKNESS'
 "VAR"                                               return 'VAR'
 "REPETER"                                           return 'REPEAT'
 "FIN REPETER"                                       return 'E_REPEAT'
@@ -125,6 +126,11 @@ commandes
     | 'COLOR' 'HEX_CODE' 'SEMI_COLON'
         {
             command_array.push({cmd:"COLOR",val:$2, err :"0",msg:"ok"});
+        }
+
+    | 'THICKNESS' 'NUMBER' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"THICKNESS",val:$2, err:"0",msg:"ok"});
         }
 
     | 'SET_AREA' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
