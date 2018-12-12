@@ -58,7 +58,6 @@
     rangeBtn.addEventListener("input", function(event) {
     	rangeCurrentValue = event.target.value;
     	speed = rangeMaxValue - rangeCurrentValue + 1;
-    	console.log(rangeCurrentValue);
     });
 
     var clearAllBtn = document.getElementById("clear_all");
@@ -104,7 +103,7 @@
     			updateDisplay(data);
 
     			var drawing = draw_zone.svg();
-    			//ajaxSaveFunction(drawing);
+    			ajaxSaveFunction(drawing);
     		},
     		error : function(e) {
     			alert("Erreur de commande !");
@@ -177,14 +176,12 @@
     // Affichage du graphe
     var putline = function(context,x0, y0, x1, y1, properties, delay_){
     	context.line(x0,y0,x1,y1)
-		.stroke(properties)
+    	.stroke(properties)
     	.animate(speed, '-', delay_)
     	.during(function(t, morph){
-			this.animate({ ease: '-', delay: 0, duration :10 }).stroke({ linecap: current_line_end });
-			this.attr({x2:morph(x0, x1), y2:morph(y0, y1)});
-			})
-		
-		
+    		this.animate({ ease: '-', delay: 0, duration :10 }).stroke({ linecap: current_line_end });
+    		this.attr({x2:morph(x0, x1), y2:morph(y0, y1)});
+    	});
     };
 
     var updateDisplay = function(command_array){
@@ -197,9 +194,9 @@
     		if(command.cmd === 'TELEPORT'){
     			s = command.val;
     			teleport(s[0],s[1]);
-			}
-			
-			if(command.cmd === 'OFFSET'){
+    		}
+
+    		if(command.cmd === 'OFFSET'){
     			s = command.val;
     			origin_offset = [s[0],s[1]];
     		}
@@ -217,7 +214,6 @@
 
     		if(command.cmd === 'DIST'){
     			var R = 0;
-                //console.log();
                 if(typeof(command.varname)!== 'undefined' ){
                 	R = parseInt(variable[command.varname]);
                     //console.log(command.varname);
@@ -248,9 +244,68 @@
             	console.log(current_angle);
             }
 
-            if(command.cmd === 'VAR'){
-            	variable[command.varname] = command.val;
+            if(command.cmd === 'VAR=CSTE'){
+            	variable[command.varname] = Number(command.val);
             }
+
+            if(command.cmd === 'VAR++') {
+            	console.log(variable[command.varname]);
+            	
+            	variable[command.varname] = variable[command.varname] + 1;
+            	console.log(variable[command.varname]);
+            }
+
+            if(command.cmd === 'VAR--') {
+            	variable[command.varname] = variable[command.varname] - 1;	
+            }
+
+            if(command.cmd === 'VAR=VAR+VAR') {
+				variable[command.varname] = Number(variable[command.varname1]) + Number(variable[command.varname2]);
+			}
+
+			if(command.cmd === 'VAR=VAR+CSTE') {
+				variable[command.varname] = Number(variable[command.varname1]) + Number(command.val);
+			}
+
+			if(command.cmd === 'VAR=CSTE+CSTE') {
+				variable[command.varname] = Number(command.val) + Number(command.val1);
+			}
+
+			if(command.cmd === 'VAR=VAR-VAR') {
+				variable[command.varname] = Number(variable[command.varname1]) - Number(variable[command.varname2]);
+			}
+
+			if(command.cmd === 'VAR=VAR-CSTE') {
+				variable[command.varname] = Number(variable[command.varname1]) - Number(command.val);
+			}
+
+			if(command.cmd === 'VAR=CSTE-CSTE') {
+				variable[command.varname] = Number(command.val) - Number(command.val1);
+			}
+
+			if(command.cmd === 'VAR=VAR*VAR') {
+				variable[command.varname] = Number(variable[command.varname1]) * Number(variable[command.varname2]);
+			}
+
+			if(command.cmd === 'VAR=VAR*CSTE') {
+				variable[command.varname] = Number(variable[command.varname1]) * Number(command.val);
+			}
+
+			if(command.cmd === 'VAR=CSTE*CSTE') {
+				variable[command.varname] = Number(command.val) * Number(command.val1);
+			}
+
+			if(command.cmd === 'VAR=VAR/VAR') {
+				variable[command.varname] = Number(variable[command.varname1]) / Number(variable[command.varname2]);
+			}
+
+			if(command.cmd === 'VAR=VAR/CSTE') {
+				variable[command.varname] = Number(variable[command.varname1]) / Number(command.val);
+			}
+
+			if(command.cmd === 'VAR=CSTE/CSTE') {
+				variable[command.varname] = Number(command.val) / Number(command.val1);
+			}
 
             if(command.cmd === 'DBG_VAR'){
             	//console.log(variable[command.varname]);
