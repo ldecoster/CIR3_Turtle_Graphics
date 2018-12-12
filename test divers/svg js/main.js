@@ -26,12 +26,16 @@
 
 
     speed = 100;
-    var rect = draw_zone.rect(5, 5).fill('#f06');//.move(500,500).animate({duration : speed, ease: '<', delay: 0 });
+    var rect = draw_zone.rect(5, 5).fill('#00FF00');//.move(500,500).animate({duration : speed, ease: '<', delay: 0 });
     //rect.attr('x', '10%').animate().attr('x', '50%');
     rect.move(50,50);
     rect.animate({ ease: '<', delay: 100, duration :1500 }).move(400,400);
     rect.animate({ ease: '<', delay: 1500, duration :1500 }).move(10,400);
+    rect.animate({ ease: '<', delay: 100, duration :1500 }).attr({ fill: '#0000FF' });
 
+    var rect2 = draw_zone.rect(15, 15).fill('#FF0000');
+
+    rect2.animate({ ease: '<', delay: 100, duration :1 }).attr({ fill: '#0000FF' });
     //def fonctions
     var putline = function(context,x0, y0, x1, y1, properties){
         var line = context.line(x0,y0,x1,y1);

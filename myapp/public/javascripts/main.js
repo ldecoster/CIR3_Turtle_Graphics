@@ -155,7 +155,7 @@
     };
 
     var draw = function(x1,y1){
-    	properties = { color: current_color, width: current_thickness, linecap: current_line_end };
+    	properties = { color: current_color, width: current_thickness };
     	var delay = nb_line*speed;
 
         //console.log(nb_line);
@@ -177,11 +177,14 @@
     // Affichage du graphe
     var putline = function(context,x0, y0, x1, y1, properties, delay_){
     	context.line(x0,y0,x1,y1)
-    	.stroke(properties)
+		.stroke(properties)
     	.animate(speed, '-', delay_)
-    	.during(function(t, morph) {
-    		this.attr({x2:morph(x0, x1), y2:morph(y0, y1)})
-    	});
+    	.during(function(t, morph){
+			this.animate({ ease: '-', delay: 0, duration :10 }).stroke({ linecap: current_line_end });
+			this.attr({x2:morph(x0, x1), y2:morph(y0, y1)});
+			})
+		
+		
     };
 
     var updateDisplay = function(command_array){
@@ -234,7 +237,7 @@
 
             if(command.cmd === 'TURN'){
             	var angle = command.val;
-            	console.log(angle);
+            	//console.log(angle);
             	if(angle[0]=== '$' ){angle = variable[command.val];}
             	current_angle = parseInt(angle) + current_angle;
             	console.log(current_angle);
@@ -245,7 +248,7 @@
             }
 
             if(command.cmd === 'DBG_VAR'){
-            	console.log(variable[command.varname]);
+            	//console.log(variable[command.varname]);
             }
 
             if(command.cmd === 'REPEAT'){
