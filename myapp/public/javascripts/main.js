@@ -197,6 +197,11 @@
     		if(command.cmd === 'TELEPORT'){
     			s = command.val;
     			teleport(s[0],s[1]);
+			}
+			
+			if(command.cmd === 'OFFSET'){
+    			s = command.val;
+    			origin_offset = [s[0],s[1]];
     		}
 
     		if(command.cmd === 'MOVE'){

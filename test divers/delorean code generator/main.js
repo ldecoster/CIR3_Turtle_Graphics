@@ -15,7 +15,7 @@
     var update_display = function()
     {
         draw_zone.rect(1920, 1080).fill('#FFFFFF');
-        draw_zone.image('img/1.png');
+        draw_zone.image('img/1.jpg');
         draw_zone.circle(precision).fill('#00FF00').move(cursor_pos[0],cursor_pos[1])
         
 
