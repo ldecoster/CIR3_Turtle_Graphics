@@ -121,6 +121,21 @@ commandes
             command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0"});
         }
 
+    | 'TELEPORT' 'VARNAME' 'COMMA' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0"});
+        }
+    
+    | 'TELEPORT' 'NUMBER' 'COMMA' 'VARNAME' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0"});
+        }
+    
+    | 'TELEPORT' 'VARNAME' 'COMMA' 'NUMBER' 'SEMI_COLON'
+        {
+            command_array.push({cmd:"TELEPORT",val:[$2,$4], err :"0"});
+        }
+
     | 'COLOR' 'HEX_CODE' 'SEMI_COLON'
         {
             command_array.push({cmd:"COLOR",val:$2, err :"0",msg:"ok"});

@@ -170,8 +170,13 @@
     };
 
     var teleport = function(x,y){
+		console.log("tttt");
+		console.log(x);
+		console.log(y);
     	curent_position = [x,y];
-    };
+		console.log(curent_position);
+
+	};
 
     // Affichage du graphe
     var putline = function(context,x0, y0, x1, y1, properties, delay_){
@@ -191,10 +196,16 @@
 
     	for(let command of command_array){
 
-    		if(command.cmd === 'TELEPORT'){
-    			s = command.val;
-    			teleport(s[0],s[1]);
+			if(command.cmd === 'TELEPORT'){
+    			s = curent_position;
+    			e = command.val;
+    			if(e[0][0] === '$' ){e[0] = parseInt(variable[command.val[0]]);}
+    			if(e[1][0] === '$' ){e[1] = parseInt(variable[command.val[1]]);}
+				teleport(parseInt(e[0]),parseInt(e[1]));
+				console.log(e);
     		}
+
+
 
     		if(command.cmd === 'SET_ORIGIN'){
     			s = command.val;
