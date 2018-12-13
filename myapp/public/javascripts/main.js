@@ -196,9 +196,9 @@
     			teleport(s[0],s[1]);
     		}
 
-    		if(command.cmd === 'OFFSET'){
+    		if(command.cmd === 'SET_ORIGIN'){
     			s = command.val;
-    			origin_offset = [s[0],s[1]];
+    			origin_offset = [Number(s[0]),Number(s[1])];
     		}
 
     		if(command.cmd === 'MOVE'){

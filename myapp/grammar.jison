@@ -81,7 +81,6 @@ commandes
             command_array.push({cmd: $1 ,val:[$2,$4], err :"1", msg :"commande inconnue"});   
         }
     
-
     
     | 'MOVE' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {
@@ -140,8 +139,6 @@ commandes
         
     | 'SET_ORIGIN' 'NUMBER' 'COMMA' 'NUMBER' 'SEMI_COLON'
         {
-            //console.log("DEFINITION DE LORIGINE ");
-            //console.log($2 + ',' + $4);
             command_array.push({cmd:"SET_ORIGIN",val:[$2,$4], err :"0"});
         }
 
