@@ -20,10 +20,66 @@
 		</div>
 	</nav>
 
+	<div class="container-fluid table-responsive">
+		<h3 class="text-center text-secondary">/!\ Toutes les commandes se terminent par un point-virgule ';' /!\</h3>
+		<table class="table table-bordered table-striped">
+			<thead>
+				<tr>
+					<th scope="col">Commande</th>
+					<th scope="col">Paramètre(s)</th>
+					<th scope="col">Exemple</th>
+					<th scope="col">Commentaire</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<th scope="row">$</th>
+					<td>nom_variable</td>
+					<td>$longueurCarre;</td>
+					<td>Utilise une variable</td>
+				</tr>
+				<tr>
+					<th scope="row">Teleporter</th>
+					<td>coord_x, coord_y</td>
+					<td>Teleporter 150, 150;</td>
+					<td>Téléporte le curseur aux coordonnées choisies</td>
+				</tr>
+				<tr>
+					<th scope="row">Avancer</th>
+					<td>coord_x, coord_y <span class="font-weight-bold">||</span> distance</td>
+					<td>Avancer 150, 150; Avancer 200;</td>
+					<td>Dessine jusqu'aux coordonnées choisies ou bien dessine de x pixels en suivant la direction définies préalablement</td>
+				</tr>
+				<tr>
+					<th scope="row">Couleur</th>
+					<td>#xxxxxx</td>
+					<td>Couleur #ff00ff;</td>
+					<td>Choisi la couleur du trait</td>
+					<td></td>
+				</tr>
+				<tr>
+					<th scope="row">Epaisseur</th>
+					<td>epaisseur</td>
+					<td>Epaisseur 2;</td>
+					<td>Choisi l'épaisseur du trait</td>
+				</tr>
+				<tr>
+					<th scope="row">Tourner</th>
+					<td>angle <span class="font-weight-bold">||</span> direction</td>
+					<td>Tourner 180; Tourner gauche;</td>
+					<td>Change la direction du dessin (de 0° à 360°, 0° permet de se diriger vers la droite)</td>
+				</tr>
+				<tr>
+					<th scope="row">Repeter</th>
+					<td>n_fois</td>
+					<td>Repeter 5;</td>
+					<td>Permet de répéter le code suivant l'instruction. Pour délimiter la fin du bloc, utilisez l'insctruction <span class="font-italic">'Fin Repeter'</span></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+
 	<script src="/javascripts/libs/jquery-3.3.1.min.js"></script>
 	<script src="/javascripts/libs/bootstrap.min.js"></script>
-	<script src="/javascripts/libs/svg.js"></script>
-	<script src="/javascripts/libs/ace.js"></script>
-	<script src="/javascripts/main.js"></script>
 </body>
 </html>
