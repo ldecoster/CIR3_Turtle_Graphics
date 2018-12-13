@@ -19,7 +19,6 @@
 "TOURNER"                                           return 'TURN'
 "COULEUR"                                           return 'COLOR'
 "EPAISSEUR"                                         return 'THICKNESS'
-"VAR"                                               return 'VAR'
 "REPETER"                                           return 'REPEAT'
 "FIN REPETER"                                       return 'E_REPEAT'
 
@@ -147,19 +146,9 @@ commandes
         }
 
 
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=CSTE",val: $4, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=CSTE",val: $3, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR",val: $4, varname: $2, err :"0"});
         }
 
     |  'VARNAME' 'EQ' 'VARNAME' 'SEMI_COLON'
@@ -179,39 +168,20 @@ commandes
         }
 
 
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '+' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR+VAR",varname1: $4, varname2:$6, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'VARNAME' '+' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR+VAR",varname1: $3, varname2:$5, varname: $1, err :"0"});
         }
 
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '+' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR+CSTE",varname1: $4, val:$6, varname: $2, err :"0"});
-        }
 
     |  'VARNAME' 'EQ' 'VARNAME' '+' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR+CSTE",varname1: $3, val:$5, varname: $1, err :"0"});
         }
 
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '+' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR+CSTE",varname1: $6, val:$4, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'NUMBER' '+' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR+CSTE",varname1: $5, val:$3, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '+' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=CSTE+CSTE",val1: $6, val:$4, varname: $2, err :"0"});
         }
 
     | 'VARNAME' 'EQ' 'NUMBER' '+' 'NUMBER' 'SEMI_COLON'
@@ -220,39 +190,20 @@ commandes
         }
     
 
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '-' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR-VAR",varname1: $4, varname2:$6, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'VARNAME' '-' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR-VAR",varname1: $3, varname2:$5, varname: $1, err :"0"});
         }
 
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '-' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR-CSTE",varname1: $4, val:$6, varname: $2, err :"0"});
-        }
 
     |  'VARNAME' 'EQ' 'VARNAME' '-' 'NUMBER' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR-CSTE",varname1: $3, val:$5, varname: $1, err :"0"});
         }
 
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '-' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR-CSTE",varname1: $6, val:$4, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'NUMBER' '-' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR-CSTE",varname1: $5, val:$3, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '-' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=CSTE-CSTE",val1: $6, val:$4, varname: $2, err :"0"});
         }
 
     | 'VARNAME' 'EQ' 'NUMBER' '-' 'NUMBER' 'SEMI_COLON'
@@ -261,19 +212,9 @@ commandes
         }
 
 
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '*' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR*VAR",varname1: $4, varname2:$6, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'VARNAME' '*' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR*VAR",varname1: $3, varname2:$5, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '*' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR*CSTE",varname1: $4, val:$6, varname: $2, err :"0"});
         }
 
     |  'VARNAME' 'EQ' 'VARNAME' '*' 'NUMBER' 'SEMI_COLON'
@@ -281,19 +222,9 @@ commandes
             command_array.push({cmd:"VAR=VAR*CSTE",varname1: $3, val:$5, varname: $1, err :"0"});
         }
 
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '*' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR*CSTE",varname1: $6, val:$4, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'NUMBER' '*' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR*CSTE",varname1: $5, val:$3, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '*' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=CSTE*CSTE",val1: $6, val:$4, varname: $2, err :"0"});
         }
 
     | 'VARNAME' 'EQ' 'NUMBER' '*' 'NUMBER' 'SEMI_COLON'
@@ -302,19 +233,9 @@ commandes
         }
 
 
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '/' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR/VAR",varname1: $4, varname2:$6, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'VARNAME' '/' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR/VAR",varname1: $3, varname2:$5, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'VARNAME' '/' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR/CSTE",varname1: $4, val:$6, varname: $2, err :"0"});
         }
 
     |  'VARNAME' 'EQ' 'VARNAME' '/' 'NUMBER' 'SEMI_COLON'
@@ -322,19 +243,9 @@ commandes
             command_array.push({cmd:"VAR=VAR/CSTE",varname1: $3, val:$5, varname: $1, err :"0"});
         }
 
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '/' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=VAR/CSTE",varname1: $6, val:$4, varname: $2, err :"0"});
-        }
-
     |  'VARNAME' 'EQ' 'NUMBER' '/' 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"VAR=VAR/CSTE",varname1: $5, val:$3, varname: $1, err :"0"});
-        }
-
-    | 'VAR' 'VARNAME' 'EQ' 'NUMBER' '/' 'NUMBER' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"VAR=CSTE/CSTE",val1: $6, val:$4, varname: $2, err :"0"});
         }
 
     | 'VARNAME' 'EQ' 'NUMBER' '/' 'NUMBER' 'SEMI_COLON'
@@ -343,11 +254,6 @@ commandes
         }
 
 
-    | 'VAR' 'VARNAME' 'SEMI_COLON'
-        {
-            command_array.push({cmd:"DBG_VAR", varname: $2, err :"0"});
-        }
-    
     | 'VARNAME' 'SEMI_COLON'
         {
             command_array.push({cmd:"DBG_VAR", varname: $2, err :"0"});

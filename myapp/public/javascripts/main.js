@@ -249,10 +249,7 @@
             }
 
             if(command.cmd === 'VAR++') {
-            	console.log(variable[command.varname]);
-            	
             	variable[command.varname] = variable[command.varname] + 1;
-            	console.log(variable[command.varname]);
             }
 
             if(command.cmd === 'VAR--') {
