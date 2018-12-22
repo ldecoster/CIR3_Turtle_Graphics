@@ -21,7 +21,7 @@
 	</nav>
 
 	<div class="container-fluid table-responsive">
-		<h3 class="text-center text-secondary">/!\ Toutes les commandes se terminent par un point-virgule ';' /!\</h3>
+		<div class="text-center alert alert-danger"><strong>Toutes les commandes se terminent par un point-virgule ';'</strong></div>
 		<table class="table table-bordered table-striped">
 			<thead>
 				<tr>
@@ -55,7 +55,7 @@
 					<td>#xxxxxx</td>
 					<td>Couleur #ff00ff;</td>
 					<td>Choisi la couleur du trait</td>
-					<td></td>
+					
 				</tr>
 				<tr>
 					<th scope="row">Epaisseur</th>
@@ -74,6 +74,12 @@
 					<td>n_fois</td>
 					<td>Repeter 5;</td>
 					<td>Permet de répéter le code suivant l'instruction. Pour délimiter la fin du bloc, utilisez l'insctruction <span class="font-italic">'Fin Repeter'</span></td>
+				</tr>
+				<tr>
+					<th scope="row">Def_origine</th>
+					<td>coord_x,coord_y</td>
+					<td>Def_origine 150,170;</td>
+					<td>Permet de changer l'origine du repère dans lequel on dessine</td>
 				</tr>
 			</tbody>
 		</table>
