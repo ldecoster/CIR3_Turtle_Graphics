@@ -18,3 +18,8 @@ Pour lancer le serveur node (backend), veuillez vous rendre dans le dossier myap
     npm start
 
 Une fois cela fait, le serveur est accessible à l'adresse `localhost:3000`.
+
+### Auteurs
+
+  + Loïc Decoster
+  + Pierre Paque
