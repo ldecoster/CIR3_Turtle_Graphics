@@ -19,11 +19,6 @@ Pour lancer le serveur node (backend), veuillez vous rendre dans le dossier myap
 
 Une fois cela fait, le site est accessible à l'adresse `localhost:3000`.
 
-### Auteurs
-
-  + Loïc Decoster
-  + Pierre Paque
-
 ### Aperçu
 
 ![alt text](https://github.com/ldecoster/CIR3_Turtle_Graphics/blob/master/myapp/public/images/presentation_dessin.png)
